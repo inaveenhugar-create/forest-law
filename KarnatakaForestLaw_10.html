@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ವನ ಕಾನೂನು | Karnataka Forest Law</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f0f4f0;color:#1a2a1a}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit}
+
+/* SCREENS */
+#login-screen{position:fixed;inset:0;background:linear-gradient(160deg,#1a3d1a,#0a1f0a);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10}
+#app-screen{position:fixed;inset:0;display:none;flex-direction:column}
+
+/* LOGIN */
+.card{background:#fff;border-radius:20px;padding:32px 28px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.brand{text-align:center;margin-bottom:24px}
+.brand-icon{font-size:52px;display:block;margin-bottom:8px}
+.brand h1{font-size:22px;font-weight:700;color:#1a3d1a}
+.brand p{font-size:13px;color:#888;margin-top:3px}
+.form-title{font-size:17px;font-weight:700;margin-bottom:18px;color:#1a2a1a}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#555;margin-bottom:5px}
+.field input,.field select{width:100%;padding:11px 13px;border:2px solid #e8e8e8;border-radius:8px;font-size:14px;color:#1a2a1a;outline:none;background:#fff;transition:border .2s}
+.field input:focus,.field select:focus{border-color:#2d6a2d}
+.btn-primary{width:100%;padding:12px;background:#1a3d1a;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;margin-top:8px;transition:background .2s}
+.btn-primary:hover{background:#2d6a2d}
+.btn-secondary{width:100%;padding:11px;background:transparent;color:#2d6a2d;border:2px solid #ddd;border-radius:8px;font-size:14px;margin-top:8px}
+.err{color:#c0392b;font-size:13px;min-height:18px;margin:6px 0}
+.d-none{display:none!important}
+
+/* APP LAYOUT */
+.topbar{height:54px;background:#1a3d1a;color:#fff;display:flex;align-items:center;padding:0 12px;gap:10px;flex-shrink:0;z-index:5}
+.topbar-menu{background:none;border:none;color:#fff;font-size:22px;padding:6px 8px;border-radius:6px}
+.topbar-title{flex:1;font-size:16px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar-actions{display:flex;gap:6px}
+.topbar-actions button{background:rgba(255,255,255,.15);border:none;color:#fff;padding:7px 10px;border-radius:7px;font-size:16px}
+
+.app-body{flex:1;display:flex;overflow:hidden}
+
+/* SIDEBAR */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:none}
+.overlay.show{display:block}
+.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:270px;background:#fff;z-index:25;display:flex;flex-direction:column;transition:left .25s;box-shadow:4px 0 20px rgba(0,0,0,.2)}
+.sidebar.open{left:0}
+.sb-header{background:#1a3d1a;padding:18px 16px;display:flex;align-items:center;gap:12px}
+.sb-avatar{font-size:32px}
+.sb-name{color:#fff;font-weight:600;font-size:15px}
+.sb-role{color:rgba(255,255,255,.7);font-size:12px;margin-top:2px}
+.sb-nav{list-style:none;padding:10px 8px;flex:1}
+.sb-nav li{margin:2px 0}
+.sb-btn{width:100%;text-align:left;padding:12px 16px;background:none;border:none;border-radius:8px;font-size:15px;color:#333}
+.sb-btn:hover,.sb-btn.active{background:#e8f4e8;color:#1a3d1a;font-weight:600}
+.sb-footer{padding:14px;border-top:1px solid #eee}
+.btn-logout{width:100%;padding:10px;background:#fff0f0;color:#c0392b;border:2px solid #ffcccc;border-radius:8px;font-size:14px}
+
+/* MAIN */
+.main-area{flex:1;overflow-y:auto;background:#f0f4f0}
+.page{display:none}
+.page.active{display:block}
+
+/* HOME */
+.hero{background:linear-gradient(135deg,#1a3d1a,#2d6a2d);padding:24px 18px;display:flex;justify-content:space-between;align-items:center;color:#fff}
+.hero h2{font-size:20px;font-weight:700}
+.hero p{font-size:13px;opacity:.8;margin-top:3px}
+.hero-icon{font-size:48px;opacity:.2}
+.home-search-bar{margin:16px;display:flex;gap:8px}
+.home-search-bar input{flex:1;padding:12px 16px;border:2px solid #ddd;border-radius:24px;font-size:14px;outline:none;background:#fff}
+.home-search-bar input:focus{border-color:#2d6a2d}
+.home-search-bar button{padding:12px 16px;background:#1a3d1a;color:#fff;border:none;border-radius:24px;font-size:16px}
+.section-label{padding:8px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#888}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 14px}
+.cat-card{border-radius:12px;padding:16px;color:#fff;transition:transform .15s}
+.cat-card:active{transform:scale(.97)}
+.cat-icon{font-size:28px;margin-bottom:8px}
+.cat-name{font-size:13px;font-weight:700;line-height:1.3}
+.cat-sub{font-size:11px;opacity:.7;margin-top:3px}
+.judgment-list{padding:0 16px 20px;display:flex;flex-direction:column;gap:8px}
+.j-card{background:#fff;border-radius:8px;padding:14px;border-left:3px solid #c8a84b;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.j-title{font-size:13px;font-weight:600}
+.j-meta{font-size:12px;color:#888;margin-top:3px}
+
+/* LIBRARY */
+.lib-header{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between}
+.lib-header h2{font-size:19px;font-weight:700}
+.load-drive-btn{padding:9px 14px;background:#1a3d1a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.drive-status-bar{margin:0 16px 12px;padding:10px 14px;background:#e8f4e8;border-radius:8px;font-size:13px;color:#1a3d1a;font-weight:600;display:none}
+.filter-bar{display:flex;gap:8px;padding:0 16px 14px;overflow-x:auto}
+.filter-btn{padding:7px 15px;border:2px solid #ddd;border-radius:20px;background:#fff;color:#555;font-size:13px;white-space:nowrap;flex-shrink:0}
+.filter-btn.active{background:#1a3d1a;color:#fff;border-color:#1a3d1a}
+.doc-list{padding:0 16px 60px;display:flex;flex-direction:column;gap:10px}
+.doc-card{background:#fff;border-radius:12px;padding:15px;box-shadow:0 2px 6px rgba(0,0,0,.07);display:flex;align-items:flex-start;gap:12px}
+.doc-icon{font-size:32px;flex-shrink:0}
+.doc-info{flex:1;min-width:0}
+.doc-title{font-size:14px;font-weight:600;color:#1a2a1a}
+.doc-desc{font-size:12px;color:#777;margin-top:3px}
+.doc-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
+.doc-tag{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.tag-act{background:#e8f4e8;color:#2d6a2d}
+.tag-rules{background:#e8f0ff;color:#4444aa}
+.tag-judgment{background:#fff3e0;color:#aa6600}
+.tag-manual{background:#f0e8ff;color:#664499}
+.doc-size{font-size:11px;color:#aaa}
+.doc-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.btn-view{padding:7px 12px;background:#1a3d1a;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600}
+.btn-sources{padding:7px 12px;background:#fff;color:#2d6a2d;border:2px solid #2d6a2d;border-radius:7px;font-size:12px;font-weight:600}
+
+/* SEARCH */
+.search-header{background:#fff;padding:14px 16px;border-bottom:2px solid #e8f0e8;position:sticky;top:0;z-index:5}
+.search-wrap{display:flex;align-items:center;background:#f0f4f0;border:2px solid #ddd;border-radius:24px;padding:0 14px;gap:8px}
+.search-wrap input{flex:1;padding:11px 0;border:none;background:transparent;font-size:14px;color:#1a2a1a;outline:none}
+.search-wrap button{background:none;border:none;color:#888;font-size:15px}
+.hint-pills{display:flex;gap:8px;margin-top:12px;overflow-x:auto}
+.hint-pill{padding:5px 13px;background:#e8f4e8;color:#2d6a2d;border-radius:14px;font-size:12px;white-space:nowrap;flex-shrink:0;border:none;font-weight:600}
+.search-body{padding:14px 16px 60px}
+.search-empty{text-align:center;padding:60px 20px;color:#888}
+.search-empty-icon{font-size:52px;margin-bottom:14px}
+.results-count{font-size:13px;color:#888;margin-bottom:14px}
+.result-group{margin-bottom:22px}
+.result-group-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#888;margin-bottom:8px;padding:0 2px}
+.result-card{background:#fff;border-radius:8px;padding:14px;margin-bottom:8px;box-shadow:0 2px 5px rgba(0,0,0,.06);border-left:3px solid transparent;transition:border-color .15s}
+.result-card:hover{border-left-color:#2d6a2d}
+.result-act{font-size:11px;font-weight:700;color:#2d6a2d;text-transform:uppercase;margin-bottom:3px}
+.result-title{font-size:14px;font-weight:600;color:#1a2a1a;margin-bottom:5px}
+.result-snippet{font-size:13px;color:#444;line-height:1.6}
+.result-snippet mark{background:#fff3a0;border-radius:2px;padding:0 2px}
+.no-results{text-align:center;padding:40px 20px;color:#888}
+
+/* AI CHAT */
+#page-ai{display:none;flex-direction:column;height:calc(100vh - 54px)}
+#page-ai.active{display:flex}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-welcome{text-align:center;padding:40px 16px}
+.chat-welcome-icon{font-size:52px;margin-bottom:12px}
+.chat-welcome h3{font-size:18px;font-weight:700;color:#1a2a1a}
+.chat-welcome p{font-size:14px;color:#555;margin-top:8px}
+.chat-suggestions{display:flex;flex-direction:column;gap:8px;margin-top:20px}
+.chat-sug-btn{padding:10px 15px;background:#e8f4e8;color:#1a3d1a;border:2px solid #d0e8d0;border-radius:8px;font-size:13px;text-align:left;transition:.2s}
+.chat-sug-btn:hover{background:#1a3d1a;color:#fff}
+.msg{display:flex;gap:8px}
+.msg.user{justify-content:flex-end}
+.msg-bubble{padding:12px 15px;border-radius:18px;font-size:14px;line-height:1.6;max-width:85%}
+.msg.user .msg-bubble{background:#1a3d1a;color:#fff;border-bottom-right-radius:4px}
+.msg.ai .msg-bubble{background:#fff;color:#1a2a1a;border-bottom-left-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.msg.ai .msg-bubble strong{color:#1a3d1a}
+.msg-avatar{font-size:24px;align-self:flex-end;flex-shrink:0}
+.typing span{display:inline-block;width:8px;height:8px;background:#aaa;border-radius:50%;margin:0 2px;animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.api-warning{background:#fff8e1;padding:10px 16px;font-size:13px;color:#795500;border-top:2px solid #ffe082}
+.api-warning a{color:#2d6a2d;font-weight:700;text-decoration:underline}
+.chat-input-area{background:#fff;border-top:2px solid #eee;padding:10px 14px;flex-shrink:0}
+.chat-input-row{display:flex;gap:8px;align-items:flex-end}
+.chat-textarea{flex:1;padding:10px 14px;border:2px solid #ddd;border-radius:20px;font-size:14px;resize:none;outline:none;max-height:100px;color:#1a2a1a;background:#fff}
+.chat-textarea:focus{border-color:#2d6a2d}
+.chat-send-btn{padding:10px 15px;background:#1a3d1a;color:#fff;border:none;border-radius:20px;font-size:16px;flex-shrink:0}
+.chat-send-btn:disabled{opacity:.4}
+
+/* SETTINGS */
+.settings-body{padding:16px}
+.set-section{margin-bottom:20px}
+.set-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#888;margin-bottom:8px}
+.set-card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 2px 6px rgba(0,0,0,.07);margin-bottom:8px}
+.set-card-title{font-size:15px;font-weight:600;color:#1a2a1a;margin-bottom:4px}
+.set-card-desc{font-size:13px;color:#777;margin-bottom:12px}
+.set-input{width:100%;padding:10px 13px;border:2px solid #ddd;border-radius:8px;font-size:14px;color:#1a2a1a;outline:none;margin-bottom:10px}
+.set-input:focus{border-color:#2d6a2d}
+.btn-danger{width:100%;padding:10px;background:#fff0f0;color:#c0392b;border:2px solid #ffcccc;border-radius:8px;font-size:14px;margin-top:8px}
+.success-msg{color:#27ae60;font-size:13px;margin-top:6px;font-weight:600}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #f0f0f0;font-size:13px;color:#444;align-items:flex-start}
+.step:last-child{border:none}
+.step-num{width:22px;height:22px;background:#1a3d1a;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-note{text-align:center;font-size:13px;color:#27ae60;font-weight:700;margin-top:10px}
+
+/* SECTION DETAIL */
+#section-overlay{position:fixed;inset:0;background:#fff;z-index:30;display:none;flex-direction:column;overflow-y:auto}
+#section-overlay.show{display:flex}
+.section-header{padding:15px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;color:#fff}
+.section-back-btn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:7px 12px;border-radius:7px;font-size:14px}
+.section-header-text{flex:1}
+.section-sub{font-size:11px;opacity:.8}
+.section-heading{font-size:16px;font-weight:700}
+.section-body{padding:20px 16px 60px}
+.section-law-name{font-size:11px;font-weight:700;color:#2d6a2d;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.section-big-title{font-size:18px;font-weight:700;color:#1a2a1a;margin-bottom:16px;line-height:1.3}
+.section-text{font-size:15px;line-height:1.8;color:#333}
+.section-text p{margin-bottom:12px}
+.ask-ai-btn{margin-top:20px;padding:11px 18px;background:#1a3d1a;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600}
+
+/* DRIVE LOADER */
+#drive-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+#drive-modal.show{display:flex}
+.drive-modal-box{background:#fff;border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto}
+.drive-modal-top{background:#1a3d1a;padding:16px 20px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:12px}
+.drive-modal-top h3{color:#fff;font-size:16px;font-weight:700;flex:1}
+.drive-modal-close{background:rgba(255,255,255,.2);border:none;color:#fff;padding:6px 12px;border-radius:6px;font-size:14px}
+.drive-modal-body{padding:20px}
+.drive-info-box{background:#e8f4e8;border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#1a3d1a;line-height:1.7}
+.drive-file-item{background:#f7f9f7;border-radius:8px;padding:12px;margin-bottom:8px;border:2px solid #e0e8e0}
+.drive-file-item.ok{border-color:#27ae60;background:#f0fff4}
+.drive-file-item.fail{border-color:#e74c3c;background:#fff5f5}
+.drive-file-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.drive-file-icon{font-size:22px;flex-shrink:0}
+.drive-file-name{font-size:13px;font-weight:600;flex:1}
+.drive-file-badge{font-size:18px}
+.drive-file-input{width:100%;padding:8px 11px;border:2px solid #ddd;border-radius:6px;font-size:12px;color:#333;outline:none;font-family:monospace}
+.drive-file-input:focus{border-color:#2d6a2d}
+.drive-load-all-btn{width:100%;padding:13px;background:#1a3d1a;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;margin-top:4px}
+.drive-save-btn{width:100%;padding:11px;background:#e8f4e8;color:#1a3d1a;border:2px solid #2d6a2d;border-radius:10px;font-size:14px;font-weight:600;margin-top:8px}
+.drive-progress{background:#e8f4e8;border-radius:8px;padding:12px;margin-bottom:16px;font-size:13px;color:#1a3d1a;display:none}
+.drive-progress.show{display:block}
+.drive-result{background:#e8f4e8;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;display:none}
+.drive-result.show{display:block}
+.drive-result-num{font-size:36px;font-weight:700;color:#1a3d1a}
+.drive-result-label{font-size:13px;color:#555;margin-top:4px}
+
+/* DOC SOURCES MODAL */
+#sources-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+#sources-modal.show{display:flex}
+.sources-box{background:#1a1a1a;border-radius:16px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
+.sources-top{background:#2a2a2a;padding:14px 18px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:12px}
+.sources-top h3{color:#f0c060;font-size:15px;font-weight:700;flex:1}
+.sources-close{background:rgba(255,255,255,.1);border:none;color:#fff;padding:6px 12px;border-radius:6px;font-size:14px}
+.sources-body{padding:20px}
+.source-link{display:flex;align-items:center;gap:12px;margin-bottom:8px;padding:12px 14px;border-radius:10px;color:#fff;text-decoration:none;transition:.15s}
+.source-link:hover{opacity:.85}
+.source-link-icon{font-size:20px;flex-shrink:0}
+.source-link-info{flex:1;min-width:0}
+.source-link-name{font-size:14px;font-weight:600}
+.source-link-url{font-size:11px;opacity:.6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.source-link-arrow{font-size:16px;flex-shrink:0}
+.sources-tip{margin-top:16px;padding:12px;background:rgba(255,255,255,.06);border-radius:8px;color:#aaa;font-size:12px;text-align:center}
+
+/* AI response markdown */
+.msg.ai .msg-bubble h1,.msg.ai .msg-bubble h2,.msg.ai .msg-bubble h3{color:#1a3d1a;margin:8px 0 4px;font-size:14px;font-weight:700}
+.msg.ai .msg-bubble ul,.msg.ai .msg-bubble ol{padding-left:18px;margin:6px 0}
+.msg.ai .msg-bubble li{margin:3px 0}
+.msg.ai .msg-bubble code{background:#f0f4f0;padding:1px 5px;border-radius:3px;font-size:12px}
+
+/* DESKTOP */
+@media(min-width:768px){
+  .cat-grid{grid-template-columns:repeat(3,1fr)}
+  .sidebar{position:relative;left:0!important;width:240px;flex-shrink:0;transition:none;box-shadow:1px 0 0 #eee}
+  .overlay{display:none!important}
+  .topbar-menu{display:none}
+  .app-body{overflow:hidden}
+  .main-area{overflow-y:auto}
+  #page-ai.active{height:calc(100vh - 54px)}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="card">
+    <div class="brand">
+      <span class="brand-icon">⚖️</span>
+      <h1>ವನ ಕಾನೂನು</h1>
+      <p>Karnataka Forest Law Assistant</p>
+    </div>
+    <div id="login-form">
+      <div class="form-title">Sign In</div>
+      <div class="field"><label>Employee ID</label><input type="text" id="l-id" placeholder="e.g. KFD2024001"></div>
+      <div class="field"><label>Password</label><input type="password" id="l-pw" placeholder="Your password"></div>
+      <div class="err" id="l-err"></div>
+      <button class="btn-primary" id="l-btn">Sign In</button>
+      <button class="btn-secondary" id="l-reg">New user? Register →</button>
+    </div>
+    <div id="reg-form" class="d-none">
+      <div class="form-title">Create Account</div>
+      <div class="field"><label>Full Name</label><input type="text" id="r-name" placeholder="Your full name"></div>
+      <div class="field"><label>Employee ID</label><input type="text" id="r-id" placeholder="e.g. KFD2024001"></div>
+      <div class="field"><label>Designation</label>
+        <select id="r-role">
+          <option value="">-- Select --</option>
+          <option>Forest Guard</option><option>Deputy Range Forest Officer</option>
+          <option>Range Forest Officer</option><option>Assistant Conservator of Forests</option>
+          <option>Deputy Conservator of Forests</option><option>Conservator of Forests</option>
+          <option>Chief Conservator of Forests</option><option>Principal Chief Conservator of Forests</option>
+          <option>Legal Officer</option><option>Researcher / Student</option>
+        </select>
+      </div>
+      <div class="field"><label>Password (min 6 chars)</label><input type="password" id="r-pw" placeholder="Create password"></div>
+      <div class="err" id="r-err"></div>
+      <button class="btn-primary" id="r-btn">Create Account</button>
+      <button class="btn-secondary" id="r-back">← Back to Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app-screen">
+  <div class="topbar">
+    <button class="topbar-menu" id="menu-btn">☰</button>
+    <div class="topbar-title" id="page-title">Karnataka Forest Law</div>
+    <div class="topbar-actions">
+      <button id="drive-btn" title="Load Documents">📁</button>
+      <button id="search-btn" title="Search">🔍</button>
+      <button id="ai-btn" title="AI Assistant">🤖</button>
+    </div>
+  </div>
+
+  <div class="app-body">
+    <div class="overlay" id="sb-overlay"></div>
+    <div class="sidebar" id="sidebar">
+      <div class="sb-header">
+        <div class="sb-avatar">⚖️</div>
+        <div><div class="sb-name" id="sb-name">Officer</div><div class="sb-role" id="sb-role">Karnataka Forest Dept.</div></div>
+      </div>
+      <ul class="sb-nav">
+        <li><button class="sb-btn active" data-page="home">🏠 Home</button></li>
+        <li><button class="sb-btn" data-page="library">📚 Law Library</button></li>
+        <li><button class="sb-btn" data-page="search">🔍 Smart Search</button></li>
+        <li><button class="sb-btn" data-page="ai">🤖 AI Assistant</button></li>
+        <li><button class="sb-btn" data-page="settings">⚙️ Settings</button></li>
+        <li><button class="sb-btn" id="sb-drive-btn">📁 Load Documents</button></li>
+      </ul>
+      <div class="sb-footer"><button class="btn-logout" id="logout-btn">Sign Out</button></div>
+    </div>
+
+    <div class="main-area" id="main-area">
+
+      <!-- HOME -->
+      <div class="page active" id="page-home">
+        <div class="hero">
+          <div><h2>Good <span id="time-greet">Morning</span>, <span id="name-greet">Officer</span></h2><p>Karnataka Forest Department Legal Reference</p></div>
+          <div class="hero-icon">⚖️</div>
+        </div>
+        <div class="home-search-bar">
+          <input type="text" id="home-search" placeholder='Search: "Section 26 KFA" or "sandalwood"'>
+          <button id="home-search-btn">🔍</button>
+        </div>
+        <div class="section-label">Law Categories</div>
+        <div class="cat-grid">
+          <div class="cat-card" style="background:#2d6a2d" data-search="Karnataka Forest Act 1963 KFA section penalty"><div class="cat-icon">🌳</div><div class="cat-name">Karnataka Forest Act</div><div class="cat-sub">1963 · 87 Sections</div></div>
+          <div class="cat-card" style="background:#1a5c8a" data-search="Wildlife Protection Act WPA hunting Schedule penalty"><div class="cat-icon">🐘</div><div class="cat-name">Wildlife Protection Act</div><div class="cat-sub">1972 · 66 Sections</div></div>
+          <div class="cat-card" style="background:#6b3fa0" data-search="Forest Conservation Act FCA non-forest diversion"><div class="cat-icon">🏔️</div><div class="cat-name">Forest Conservation Act</div><div class="cat-sub">1980 · 5 Sections</div></div>
+          <div class="cat-card" style="background:#8a4a00" data-search="Forest Rights Act FRA tribal Gram Sabha claim"><div class="cat-icon">👥</div><div class="cat-name">Forest Rights Act</div><div class="cat-sub">2006 · 14 Sections</div></div>
+          <div class="cat-card" style="background:#8a1a1a" data-search="Indian Forest Act IFA reserved forest section"><div class="cat-icon">📜</div><div class="cat-name">Indian Forest Act</div><div class="cat-sub">1927 · 86 Sections</div></div>
+          <div class="cat-card" style="background:#1a6b5a" data-search="Karnataka Forest Rules KFR transit permit timber sandalwood"><div class="cat-icon">📋</div><div class="cat-name">KF Rules & Manuals</div><div class="cat-sub">Rules · Orders · Codes</div></div>
+        </div>
+        <div class="section-label">Key SC/HC Judgments</div>
+        <div class="judgment-list">
+          <div class="j-card" data-search="Godavarman forest definition deemed forests SC order"><div class="j-title">T.N. Godavarman Thirumalpad v. UOI</div><div class="j-meta">SC · 1995 ongoing · Forest definition, deemed forests</div></div>
+          <div class="j-card" data-search="Lafarge Umiam Mining forest clearance MoEF approval"><div class="j-title">Lafarge Umiam Mining v. UOI (2011)</div><div class="j-meta">SC · 2011 · Forest clearance, MoEF powers</div></div>
+          <div class="j-card" data-search="Wildlife First tribal eviction FRA rights forest dweller"><div class="j-title">Wildlife First v. MoEF (2019)</div><div class="j-meta">SC · 2019 · FRA evictions, tribal rights</div></div>
+          <div class="j-card" data-search="Karnataka High Court encroachment eviction notice forest"><div class="j-title">Karnataka HC — Forest Encroachment (2022)</div><div class="j-meta">HC · 2022 · Eviction procedures, notice requirements</div></div>
+        </div>
+        <div style="height:60px"></div>
+      </div>
+
+      <!-- LIBRARY -->
+      <div class="page" id="page-library">
+        <div class="lib-header">
+          <div><h2>📚 Law Library</h2><p style="font-size:13px;color:#888;margin-top:3px">15 legal documents</p></div>
+          <button class="load-drive-btn" id="lib-drive-btn">📁 My Docs</button>
+        </div>
+        <div class="drive-status-bar" id="drive-status-bar"></div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="act">Acts</button>
+          <button class="filter-btn" data-filter="rules">Rules</button>
+          <button class="filter-btn" data-filter="judgment">Judgments</button>
+          <button class="filter-btn" data-filter="manual">Manuals</button>
+        </div>
+        <div class="doc-list" id="doc-list"></div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="page" id="page-search">
+        <div class="search-header">
+          <div class="search-wrap">
+            <span>🔍</span>
+            <input type="text" id="search-input" placeholder='Search: "sec 26 kfa" · "sandalwood" · "tribal rights"'>
+            <button id="search-clear">✕</button>
+          </div>
+          <div class="hint-pills">
+            <button class="hint-pill" data-hint="Section 26 KFA penalty">Section 26 KFA</button>
+            <button class="hint-pill" data-hint="sandalwood chandana penalty transit">Sandalwood</button>
+            <button class="hint-pill" data-hint="wildlife poaching hunting Schedule I penalty">Poaching</button>
+            <button class="hint-pill" data-hint="forest rights tribal Gram Sabha claim">Forest Rights</button>
+            <button class="hint-pill" data-hint="arrest without warrant forest officer">Arrest Powers</button>
+            <button class="hint-pill" data-hint="transit pass timber transport forest produce">Transit Pass</button>
+            <button class="hint-pill" data-hint="encroachment eviction forest land notice">Encroachment</button>
+          </div>
+        </div>
+        <div class="search-body" id="search-results">
+          <div class="search-empty">
+            <div class="search-empty-icon">🔍</div>
+            <p style="font-size:15px;font-weight:600">Search Karnataka forest laws</p>
+            <p style="font-size:13px;margin-top:6px">Sections, rules, penalties, procedures</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI -->
+      <div class="page" id="page-ai">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-welcome">
+            <div class="chat-welcome-icon">🤖</div>
+            <h3>Forest Law AI Assistant</h3>
+            <p>Ask anything in English or ಕನ್ನಡ about Karnataka forest laws.</p>
+            <div class="chat-suggestions">
+              <button class="chat-sug-btn" data-sug="What are the penalties under Section 26 of KFA 1963?">Penalties under Section 26 KFA</button>
+              <button class="chat-sug-btn" data-sug="What is the procedure for filing FIR for a forest offence?">FIR procedure for forest offence</button>
+              <button class="chat-sug-btn" data-sug="What are tribal rights under Forest Rights Act 2006?">Tribal rights under FRA 2006</button>
+              <button class="chat-sug-btn" data-sug="ಸಂಡಲ್‌ವುಡ್ ಕದ್ದ ತೆಗೆದುಕೊಂಡರೆ ಶಿಕ್ಷೆ ಏನು?">ಚಂದನ ಕಳ್ಳತನ ಶಿಕ್ಷೆ</button>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="api-warning d-none" id="api-warning">⚠️ Gemini API key not set. <a href="#" id="go-settings">Go to Settings →</a></div>
+          <div class="chat-input-row">
+            <textarea class="chat-textarea" id="chat-input" rows="1" placeholder="Ask a legal question..."></textarea>
+            <button class="chat-send-btn" id="send-btn">➤</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="page" id="page-settings">
+        <div style="padding:14px 14px 4px"><h2 style="font-size:19px;font-weight:700">⚙️ Settings</h2></div>
+        <div class="settings-body">
+          <div class="set-section">
+            <div class="set-section-title">Gemini AI Key</div>
+            <div class="set-card">
+              <div class="set-card-title">Google Gemini API Key</div>
+              <div class="set-card-desc">Free from aistudio.google.com/apikey — no credit card needed</div>
+              <input type="password" class="set-input" id="key-input" placeholder="Paste your key (AIza...)">
+              <button class="btn-primary" id="save-key-btn">Save Key</button>
+              <div class="success-msg d-none" id="key-saved-msg">✅ Key saved!</div>
+            </div>
+          </div>
+          <div class="set-section">
+            <div class="set-section-title">How to get FREE Gemini key</div>
+            <div class="set-card">
+              <div class="steps">
+                <div class="step"><span class="step-num">1</span><span>Go to <strong>aistudio.google.com/apikey</strong></span></div>
+                <div class="step"><span class="step-num">2</span><span>Sign in with Google account</span></div>
+                <div class="step"><span class="step-num">3</span><span>Click <strong>"Create API Key"</strong></span></div>
+                <div class="step"><span class="step-num">4</span><span>Copy key starting with <strong>AIza...</strong></span></div>
+                <div class="step"><span class="step-num">5</span><span>Paste above and tap Save</span></div>
+              </div>
+              <div class="step-note">✅ 100% FREE · No credit card · 1500 queries/day</div>
+            </div>
+          </div>
+          <div class="set-section">
+            <div class="set-section-title">Account</div>
+            <div class="set-card">
+              <div class="set-card-title" id="set-name">Officer</div>
+              <div class="set-card-desc" id="set-role"></div>
+              <button class="btn-danger" id="set-logout-btn">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-area -->
+  </div><!-- /app-body -->
+</div><!-- /app-screen -->
+
+<!-- DRIVE LOADER MODAL -->
+<div id="drive-modal">
+  <div class="drive-modal-box">
+    <div class="drive-modal-top">
+      <span style="font-size:24px">📁</span>
+      <h3>Load Documents from Google Drive</h3>
+      <button class="drive-modal-close" id="drive-close-btn">✕</button>
+    </div>
+    <div class="drive-modal-body">
+      <div class="drive-info-box">
+        📌 <strong>Your 9 files are pre-filled below.</strong><br>
+        Click <strong>"📥 Load All Documents"</strong> to fetch from Google Drive.<br><br>
+        <strong>⚠️ If files show ❌:</strong> This happens when running from a local file.<br>
+        <strong>Solution:</strong> Paste the TXT content directly using the box below ↓
+      </div>
+      <div style="background:#fff3e0;border-radius:8px;padding:14px;margin-bottom:16px;border:2px solid #ffb74d">
+        <div style="font-size:13px;font-weight:700;color:#e65100;margin-bottom:8px">📋 Alternative: Paste TXT content directly</div>
+        <select id="paste-doc-select" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:8px;outline:none">
+          <option value="">-- Select which document you are pasting --</option>
+          <option value="kfa">Karnataka Forest Act 1963</option>
+          <option value="wpa">Wildlife Protection Act 1972</option>
+          <option value="fca">Forest Conservation Act 1980</option>
+          <option value="fra">Forest Rights Act 2006</option>
+          <option value="kfr">Karnataka Forest Rules</option>
+          <option value="kfdm">KFD Working Manual</option>
+          <option value="kpta">KPTA Act</option>
+          <option value="wpr">Wildlife Protection Rules</option>
+          <option value="fac">Forest Appeals and Cases</option>
+        </select>
+        <textarea id="paste-doc-text" style="width:100%;height:100px;padding:8px;border:2px solid #ddd;border-radius:6px;font-size:12px;resize:vertical;outline:none" placeholder="Open TXT file in Notepad → Ctrl+A → Ctrl+C → paste here"></textarea>
+        <button onclick="indexPastedText()" style="width:100%;padding:9px;background:#e65100;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;margin-top:6px">📥 Index This Document</button>
+        <div id="paste-result" style="font-size:12px;margin-top:6px;color:#27ae60;display:none"></div>
+      </div>
+      <div class="drive-progress" id="drive-progress"><strong>⏳</strong> <span id="drive-progress-text">Loading...</span></div>
+      <div class="drive-result" id="drive-result">
+        <div class="drive-result-num" id="drive-result-num">0</div>
+        <div class="drive-result-label">sections indexed from your documents</div>
+        <div style="color:#27ae60;font-weight:700;margin-top:8px;font-size:14px">✅ Search now uses your actual document text!</div>
+      </div>
+      <div id="drive-file-list"></div>
+      <button class="drive-load-all-btn" id="drive-load-all">📥 Load All Documents</button>
+      <button class="drive-save-btn" id="drive-save">💾 Save File IDs</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES MODAL -->
+<div id="sources-modal">
+  <div class="sources-box">
+    <div class="sources-top">
+      <span style="font-size:22px">📄</span>
+      <h3 id="sources-title">Document Sources</h3>
+      <button class="sources-close" id="sources-close-btn">✕</button>
+    </div>
+    <div class="sources-body" id="sources-body"></div>
+  </div>
+</div>
+
+<!-- SECTION OVERLAY -->
+<div id="section-overlay">
+  <div class="section-header" id="section-header">
+    <button class="section-back-btn" id="section-back">✕ Close</button>
+    <div class="section-header-text">
+      <div class="section-sub" id="section-sub"></div>
+      <div class="section-heading" id="section-heading"></div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="section-law-name" id="section-law-name"></div>
+    <div class="section-big-title" id="section-big-title"></div>
+    <div class="section-text" id="section-text"></div>
+    <button class="ask-ai-btn" id="ask-ai-btn">🤖 Ask AI about this section</button>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+var DOCS = [
+  {id:'kfa',title:'Karnataka Forest Act, 1963',desc:'Principal state law governing forest management',type:'act',icon:'🌳',pages:'87 Sections',size:'2.1 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/15340/1/karnataka_forest_act_1963.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/1356215/',color:'#1a5c8a'},{label:'Legislative Dept.',url:'https://legislative.gov.in/sites/default/files/A1963-5.pdf',color:'#6b3fa0'}]},
+  {id:'wpa',title:'Wildlife Protection Act, 1972',desc:'Central law for protection of wild animals and plants',type:'act',icon:'🐘',pages:'66 Sections',size:'1.8 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/1726/1/197253.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/1040322/',color:'#1a5c8a'},{label:'MoEF',url:'https://moef.gov.in/wp-content/uploads/2017/08/WPA1972.pdf',color:'#6b3fa0'}]},
+  {id:'fca',title:'Forest Conservation Act, 1980',desc:'Restricts non-forest use of forest land',type:'act',icon:'🏔️',pages:'5 Sections',size:'0.5 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/1530/1/198069.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/309494/',color:'#1a5c8a'}]},
+  {id:'fra',title:'Forest Rights Act, 2006',desc:'Recognition of forest rights of tribal communities',type:'act',icon:'👥',pages:'14 Sections',size:'0.8 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/1791/1/200602.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/1349766/',color:'#1a5c8a'},{label:'Tribal Ministry',url:'https://tribal.gov.in/sites/default/files/FRA-2006.pdf',color:'#6b3fa0'}]},
+  {id:'ifa',title:'Indian Forest Act, 1927',desc:'Parent central forest legislation',type:'act',icon:'📜',pages:'86 Sections',size:'1.5 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/1587/1/192716.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/1917441/',color:'#1a5c8a'}]},
+  {id:'epa',title:'Environment Protection Act, 1986',desc:'Framework for environment protection',type:'act',icon:'🌍',pages:'26 Sections',size:'0.6 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/5751/1/198629.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/182701454/',color:'#1a5c8a'}]},
+  {id:'wpasch',title:'WPA Schedules I–VI (2022)',desc:'Complete list of all protected species',type:'act',icon:'📋',pages:'Schedules',size:'0.9 MB',urls:[{label:'IndiaKanoon (Full Act)',url:'https://www.indiakanoon.org/doc/1040322/',color:'#1a5c8a'},{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/1726/1/197253.pdf',color:'#1a3d1a'}]},
+  {id:'kfr',title:'Karnataka Forest Rules, 2003',desc:'Transit permits, compounding, timber grants',type:'rules',icon:'📝',pages:'45 Rules',size:'1.2 MB',urls:[{label:'DPAL Karnataka',url:'https://dpal.kar.nic.in/Kannadaacts/36of2003(E).pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/1397168/',color:'#1a5c8a'}]},
+  {id:'god',title:'T.N. Godavarman — SC Orders',desc:'Landmark SC orders on forest definition',type:'judgment',icon:'⚖️',pages:'Multiple',size:'3.2 MB',urls:[{label:'IndiaKanoon (Best)',url:'https://www.indiakanoon.org/doc/1829783/',color:'#8a4a00'},{label:'SC Website',url:'https://main.sci.gov.in/supremecourt/1995/24226/24226_1995_1_1_26192_Order_01-Mar-2021.pdf',color:'#8a1a1a'}]},
+  {id:'lafarge',title:'Lafarge Umiam Mining v. UOI (2011)',desc:'SC ruling on forest clearance procedure',type:'judgment',icon:'⚖️',pages:'142 pages',size:'1.8 MB',urls:[{label:'IndiaKanoon (Best)',url:'https://www.indiakanoon.org/doc/1584732/',color:'#8a4a00'},{label:'SC Website',url:'https://main.sci.gov.in/supremecourt/2004/21350/21350_2004_Judgement_01-Jul-2011.pdf',color:'#8a1a1a'}]},
+  {id:'wf2019',title:'Wildlife First v. MoEF (2019)',desc:'SC ruling on FRA evictions and tribal rights',type:'judgment',icon:'⚖️',pages:'87 pages',size:'1.1 MB',urls:[{label:'IndiaKanoon (Best)',url:'https://www.indiakanoon.org/doc/133764/',color:'#8a4a00'},{label:'SC Website',url:'https://main.sci.gov.in/supremecourt/2008/7764/7764_2008_Judgement_28-Feb-2019.pdf',color:'#8a1a1a'}]},
+  {id:'kfdm',title:'KFD Working Manual',desc:'Official manual for field operations and procedures',type:'manual',icon:'📖',pages:'320 pages',size:'4.5 MB',urls:[{label:'KFD Official Site',url:'https://aranya.gov.in/aranyaweb/',color:'#1a3d1a'},{label:'Forest Dept Portal',url:'https://forest.kar.nic.in/',color:'#2d6a2d'}]},
+  {id:'campa',title:'CAMPA Act & Guidelines, 2016',desc:'Compensatory Afforestation Fund management',type:'manual',icon:'🌱',pages:'48 pages',size:'0.7 MB',urls:[{label:'India Code',url:'https://indiacode.nic.in/bitstream/123456789/11524/1/campa_act_2016.pdf',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/doc/96207193/',color:'#1a5c8a'}]},
+  {id:'cwlw',title:'Wildlife Crime Control Bureau',desc:'WCCB guidelines on wildlife offences',type:'manual',icon:'📜',pages:'40 pages',size:'0.5 MB',urls:[{label:'WCCB Official Site',url:'https://wccb.gov.in/',color:'#1a3d1a'},{label:'MoEF',url:'https://moef.gov.in/',color:'#2d6a2d'}]},
+  {id:'hwc',title:'Human-Wildlife Conflict Advisory',desc:'MoEF standard advisory for HWC management',type:'manual',icon:'🐘',pages:'56 pages',size:'1.0 MB',urls:[{label:'MoEF Project Elephant',url:'https://moef.gov.in/scheme/project-elephant/',color:'#1a3d1a'},{label:'IndiaKanoon',url:'https://www.indiakanoon.org/search/?q=human+wildlife+conflict+compensation+Karnataka',color:'#1a5c8a'}]}
+];
+
+var LAWS = {
+  kfa:{sn:'KFA',fn:'Karnataka Forest Act, 1963',color:'#2d6a2d',secs:[
+    {id:'k2',n:'2',t:'Definitions',x:'"forest officer" means any person whom the State Government empowers to carry out any purpose of this Act. "forest produce" includes timber, charcoal, catechu, wood-oil, resin, bark, lac, mahua, trees, leaves, grass, creepers, reeds, moss. "cattle" includes elephants, camels, horses, buffaloes, ponies, mules, asses, pigs, sheep, goats. "timber" includes trees when fallen or felled and all wood whether cut up or fashioned.'},
+    {id:'k3',n:'3',t:'Power to constitute Reserved Forests',x:'The State Government may constitute any forest land or waste land which is the property of Government, or over which the Government has proprietary rights, a Reserved Forest.'},
+    {id:'k26',n:'26',t:'Acts prohibited in Reserved Forests — Penalties',x:'Any person who (a) makes any fresh clearing; (b) sets fire to a Reserved Forest; (c) trespasses or pastures cattle; (d) causes damage in felling any tree; (e) fells, girdles, lops, bucks any tree or strips bark; (f) quarries stone, burns lime or charcoal, removes any forest-produce; (g) clears land for cultivation, shall be punishable with IMPRISONMENT up to ONE YEAR or FINE up to Rs.500 or BOTH. ENHANCED PENALTY under Karnataka Amendment: Imprisonment up to 7 YEARS and Fine up to Rs.5,00,000 for repeat offences.'},
+    {id:'k33',n:'33',t:'Sandalwood — Reserved Trees, Special Provisions',x:'SANDALWOOD (Santalum album / Chandana) is a RESERVED TREE throughout Karnataka. ALL sandalwood trees on ANY land (government or private) are PROPERTY OF THE STATE GOVERNMENT. No person shall fell, damage, or remove any sandalwood tree without written permission from DFO. PENALTY: Imprisonment up to 7 years and Fine up to Rs.1,00,000. Transit requires SPECIAL TRANSIT PASS from DFO. RED SANDERS (Pterocarpus santalinus) also protected under WPA Schedule III and CITES Appendix II.'},
+    {id:'k52',n:'52',t:'Seizure of forest produce — Sandalwood, Timber',x:'Any forest officer may seize any forest produce in respect of which a forest offence has been committed, together with all tools, boats, carts or cattle used. A receipt must be given to the person. Seized property shall be taken before a Magistrate. Applies to timber, sandalwood, red sanders, bamboo, wildlife products, and all forest produce.'},
+    {id:'k55',n:'55',t:'Property in trees in Reserved Forests',x:'The property in all trees, timber, forest produce standing or lying in a Reserved Forest shall vest in the STATE GOVERNMENT. No person shall cut, collect, or remove any tree, timber or forest produce from a Reserved Forest except as provided in rules.'},
+    {id:'k64',n:'64',t:'Power to arrest without warrant',x:'Any forest officer or police officer may WITHOUT A WARRANT arrest any person against whom a reasonable suspicion exists of having been concerned in any forest offence punishable with imprisonment for ONE MONTH or upwards. Covers sandalwood smuggling, timber theft, illegal felling, poaching assistance, transit without permit.'},
+    {id:'k65',n:'65',t:'Power to release on bail',x:'Any officer arresting without warrant shall forthwith take or send the person arrested before the nearest Magistrate, or shall release him on bail to appear before such Magistrate.'},
+    {id:'k68',n:'68',t:'Power to compound offences',x:'The State Government may empower a forest officer to accept a sum of money by way of COMPOSITION for forest offences. On payment, the person shall be discharged and no further proceedings taken. COMPOUNDING NOT ALLOWED for Schedule I or II WPA species; second or subsequent offences within 5 years; produce valued above Rs.50,000; sandalwood smuggling.'},
+    {id:'k76',n:'76',t:'Duty of police officer to assist',x:'Every police officer and every officer of the Revenue or Public Works department shall be BOUND TO ASSIST every forest officer in the exercise of his powers under this Act.'}
+  ]},
+  wpa:{sn:'WPA',fn:'Wildlife Protection Act, 1972',color:'#1a5c8a',secs:[
+    {id:'w2',n:'2',t:'Definitions',x:'"animal" includes amphibians, birds, mammals, reptiles, their young and eggs. "hunting" includes killing, poisoning, capturing, snaring, trapping, driving, baiting, injuring or taking any part of any wild animal. "wildlife sanctuary" area declared under section 18. "National Park" area declared under section 35.'},
+    {id:'w9',n:'9',t:'Prohibition of hunting — Penalties',x:'No person shall hunt any wild animal specified in Schedules I to IV. PENALTIES: Schedule I & II animals (elephant, tiger, leopard): Imprisonment NOT LESS THAN 1 YEAR up to 7 YEARS + Fine NOT LESS THAN Rs.10,000. Schedule III & IV: Imprisonment up to 3 years + Fine Rs.10,000. SECOND OFFENCE: Imprisonment NOT LESS THAN 3 YEARS up to 7 YEARS + Fine NOT LESS THAN Rs.25,000.'},
+    {id:'w11',n:'11',t:'Hunting permitted in certain cases',x:'The Chief Wildlife Warden may permit hunting of Schedule I animal if it has become DANGEROUS TO HUMAN LIFE or is so disabled or diseased as to be beyond recovery. For Schedule II-IV animals if dangerous to human life, property, or growing crops and danger cannot be otherwise prevented.'},
+    {id:'wivory',n:'Spl',t:'Ivory, Elephant, Tiger Products — Prohibition',x:'IVORY: Trade completely PROHIBITED. Elephant is Schedule I. Possession of ivory without valid pre-1972 certificate is an offence. PENALTY: Imprisonment 1-7 years + Fine minimum Rs.10,000. SECOND OFFENCE: 3-7 years + Rs.25,000. TIGER PARTS/SKIN: Absolutely prohibited, CITES Appendix I. LEOPARD PRODUCTS: Same as tiger, Schedule I. NO composition permitted for Schedule I species.'},
+    {id:'w29',n:'29',t:'Destruction in sanctuary prohibited',x:'No person shall destroy, exploit or remove any wildlife from a sanctuary or destroy or damage or divert the habitat of any wild animal EXCEPT under a permit granted by the Chief Wildlife Warden.'},
+    {id:'w50',n:'50',t:'Power of entry, search, arrest and detention',x:'The Chief Wildlife Warden or any authorised officer or forest officer or police officer not below Sub-Inspector may: (a) require inspection of any animal, article, trophy, licence; (b) stop any vehicle for search; (c) ARREST WITHOUT WARRANT and seize any animal, tool, vehicle, vessel, or weapon used in commission of an offence.'},
+    {id:'w51',n:'51',t:'Penalties under WPA',x:'(a) Schedule I or Part II Schedule II: Imprisonment NOT LESS THAN 1 YEAR up to 7 YEARS + Fine NOT LESS THAN Rs.10,000; (b) Schedule II III IV: Imprisonment up to 3 years + Fine NOT LESS THAN Rs.10,000; (c) SECOND SUBSEQUENT OFFENCE: Imprisonment NOT LESS THAN 3 YEARS up to 7 YEARS + Fine NOT LESS THAN Rs.25,000. Cognizable and non-bailable for Schedule I species.'}
+  ]},
+  fca:{sn:'FCA',fn:'Forest Conservation Act, 1980',color:'#6b3fa0',secs:[
+    {id:'f2',n:'2',t:'Restriction on non-forest use — Prior Approval required',x:'No State Government or other authority shall EXCEPT WITH PRIOR APPROVAL OF THE CENTRAL GOVERNMENT direct: (a) any reserved forest shall cease to be reserved; (b) any forest land may be used for any NON-FOREST PURPOSE (mining, roads, dams, industry); (c) any forest land may be assigned by lease to any private person; (d) any forest land may be cleared of trees. Forest Conservation Amendment Act 2023 expanded scope to include all land recorded as forest.'},
+    {id:'f3a',n:'3A',t:'Penalty for contravention',x:'Whoever contravenes or abets the contravention of section 2 shall be punishable with SIMPLE IMPRISONMENT for a period which may extend to FIFTEEN DAYS. The State Government official or head of department responsible is liable.'}
+  ]},
+  fra:{sn:'FRA',fn:'Forest Rights Act, 2006',color:'#8a4a00',secs:[
+    {id:'r2',n:'2',t:'Definitions',x:'"forest land" means land of any description within any forest area including unclassified forests, undemarcated forests, deemed forests, protected forests, reserved forests, Sanctuaries and National Parks. "Gram Sabha" means village assembly of ALL ADULT MEMBERS with full participation of women. "other traditional forest dweller" means any member who has for at least THREE GENERATIONS (75 years) prior to 13 December 2005 primarily resided in and depends on forest.'},
+    {id:'r3',n:'3',t:'Forest rights recognised under FRA',x:'(a) RIGHT TO LIVE: Hold and live in forest land for habitation or self-cultivation for livelihood; (b) Community rights such as nistar; (c) RIGHT TO COLLECT: Ownership, access, collect, use and dispose of MINOR FOREST PRODUCE traditionally collected; (d) Community rights of fish, water products, grazing; (e) HABITAT RIGHTS for primitive tribal groups; (f) Rights over DISPUTED LANDS; (g) Right to protect and manage community forest resources.'},
+    {id:'r4',n:'4',t:'Vesting of forest rights',x:'The Central Government recognises and vests forest rights in forest dwelling SCHEDULED TRIBES and OTHER TRADITIONAL FOREST DWELLERS who have for at least THREE GENERATIONS prior to 13 December 2005 primarily resided in and depend on the forest. Rights in CRITICAL WILDLIFE HABITATS may be modified only after State Government determines coexistence is not possible AND adequate rehabilitation is provided.'},
+    {id:'r6',n:'6',t:'Gram Sabha — Primary Authority for forest rights',x:'(1) The GRAM SABHA initiates the process by receiving claims, preparing maps, and passing a resolution. (2) Person aggrieved may petition the SUB-DIVISIONAL LEVEL COMMITTEE. (3) Appeal from SDLC lies to the DISTRICT LEVEL COMMITTEE. (4) Decision of the DLC shall be FINAL AND BINDING. No eviction of forest dwellers shall take place until recognition and vesting of forest rights is complete.'}
+  ]},
+  ifa:{sn:'IFA',fn:'Indian Forest Act, 1927',color:'#8a1a1a',secs:[
+    {id:'i2',n:'2',t:'Interpretation',x:'"forest-officer" means any person the State Government empowers to carry out any purpose of this Act. "forest-produce" includes timber, charcoal, catechu, wood-oil, resin, bark, lac, mahua. "timber" includes trees when fallen or felled and all wood whether cut up or fashioned. "village-forest" means a forest or wasteland assigned to a village community.'},
+    {id:'i26',n:'26',t:'Acts prohibited in reserved forests',x:'Any person who makes fresh clearing; sets fire to reserved forest; trespasses or pastures cattle; causes damage in felling trees; fells, girdles, lops, or strips bark from trees; quarries stone, burns lime, or removes forest-produce; clears land for cultivation, shall be punishable with imprisonment up to SIX MONTHS or Fine up to Rs.500 or BOTH.'},
+    {id:'i52',n:'52',t:'Seizure and transit procedure',x:'When forest-produce, tools, boats, carts or cattle are seized, the officer shall prepare and deliver a RECEIPT to the person from whom seized. If seizure is made in a different district than where the offence occurred, the Magistrate of the seizure district shall forward the case to the Magistrate having jurisdiction where the offence was committed.'}
+  ]},
+  kfr:{sn:'KFR',fn:'Karnataka Forest Rules & Manuals',color:'#1a6b5a',secs:[
+    {id:'kfr5',n:'Rule 5',t:'Grant of timber for building purposes',x:'(1) Timber for building may be granted to eligible persons at prescribed rates. (2) Application to RANGE FOREST OFFICER in prescribed form. (3) RFO verifies eligibility and forwards to DIVISIONAL FOREST OFFICER with recommendations. (4) DFO may sanction subject to payment of prescribed charges. (5) Grantee shall remove timber within SIX MONTHS failing which the grant lapses.'},
+    {id:'kfr12',n:'Rule 12',t:'Transit of forest produce — Transit Pass',x:'(1) No forest produce shall be transported without a valid TRANSIT PASS from the authorised forest officer. (2) Transit pass must specify: nature and quantity of produce, origin and destination, route, and time for completion. (3) Produce transported WITHOUT transit pass shall be liable to SEIZURE AND CONFISCATION. (4) Holder shall produce transit pass for inspection on demand by any forest officer or police officer. SANDALWOOD requires SPECIAL TRANSIT PASS from DFO.'},
+    {id:'kfr18',n:'Rule 18',t:'Compounding of forest offences',x:'(1) Offences may be compounded by officers of rank RANGE FOREST OFFICER and above. (2) Compounding fee based on nature of offence, value of produce, and prescribed schedule. (3) On payment, offender discharged, no further proceedings. (4) Compounding NOT permitted for: Schedule I or II WPA species; second or subsequent offences within 5 years; produce valued above Rs.50,000; sandalwood or red sanders cases.'},
+    {id:'kfrhwc',n:'GO 2022',t:'Human-Wildlife Conflict Compensation Rates',x:'ELEPHANT ATTACK: Death Rs.5,00,000; Permanent disability Rs.2,50,000; Partial disability Rs.1,00,000; Medical expenses up to Rs.25,000. TIGER/LEOPARD ATTACK: Death Rs.5,00,000; Permanent disability Rs.2,50,000. CROP DAMAGE: As assessed by RFO. PROCEDURE: Application to RFO within 15 days of incident, RFO verification within 7 days, Payment within 30 days.'}
+  ]},
+  kfdm:{sn:'KFD Manual',fn:'Karnataka Forest Department Working Manual',color:'#4a6741',secs:[
+    {id:'m1',n:'Ch.1',t:'Forest Department Hierarchy and Jurisdiction',x:'HIERARCHY: PCCF (Principal Chief Conservator of Forests) at top, then CCF (Chief Conservator), CF (Conservator), DFO (Divisional Forest Officer), ACF (Assistant Conservator), RFO (Range Forest Officer), DRFO (Deputy Range Forest Officer), Forester, Forest Guard at bottom. JURISDICTION: State divided into Forest Circles headed by CF. Circles into Divisions headed by DFO. Divisions into Ranges headed by RFO. Ranges into Beats headed by Forest Guard.'},
+    {id:'m2',n:'Ch.2',t:'Beat Register and Patrol Duties',x:'BEAT REGISTER: Every Forest Guard must maintain Beat Register recording daily patrol, trees counted, offences detected. PATROL DUTIES: (1) Daily patrol of entire beat at least once per week; (2) Night patrol during sandalwood smuggling season; (3) Record all suspicious activity in Beat Diary; (4) Report any offence immediately to DRFO/RFO within 24 hours; (5) Maintain fire lines in summer; (6) Report any encroachment immediately. FIRE WATCH: During fire season February to May, beat guards must patrol daily.'},
+    {id:'m3',n:'Ch.3',t:'Forest Offence Report (FOR) Procedure',x:'WHEN A FOREST OFFENCE IS DETECTED: STEP 1 Seize the offending produce/vehicle/tools immediately and issue receipt. STEP 2 Prepare Forest Offence Report (FOR) in prescribed format within 24 hours. STEP 3 Submit FOR to Range Forest Officer with all seized material. STEP 4 RFO decides: (a) Compound the offence if eligible under Rule 18; OR (b) Forward to Magistrate for prosecution. STEP 5 If prosecuted, file complaint before Judicial Magistrate First Class JMFC. FOR must contain: date, place, description of offence, accused name and address, seized material description and value, witnesses, arresting officer details.'},
+    {id:'m5',n:'Ch.5',t:'Sandalwood Custody and Accounting',x:'SANDALWOOD CUSTODY RULES: (1) All sandalwood found/seized/harvested must be brought to Range office immediately. (2) Weighed and recorded in Sandalwood Stock Register. (3) DFO must be informed within 24 hours. (4) Sandalwood stored at Range/Division office under lock and key. (5) Periodic physical verification by DFO/ACF mandatory. (6) Sandalwood auctioned by Karnataka Soaps and Detergents Ltd KSDL on behalf of Government. PRIVATE LAND SANDALWOOD: Owner must apply to DFO for permission to fell. No private sale permitted. ANY UNACCOUNTED SANDALWOOD is prima facie stolen Government property.'},
+    {id:'m6',n:'Ch.6',t:'Encroachment Detection and Eviction Procedure',x:'ENCROACHMENT: Any unauthorised occupation of forest land is encroachment and a cognizable offence. PROCEDURE: STEP 1 Forest Guard detects and reports to RFO. STEP 2 RFO verifies and marks boundary. STEP 3 Notice issued to encroacher under Section 61A of KFA. STEP 4 If encroacher fails to vacate within 30 days, DFO may evict with police assistance. STEP 5 Crop/structure demolished. STEP 6 Restoration work undertaken. FRA COMPLIANCE: Before eviction, RFO must verify whether encroacher has filed claim under FRA. Eviction shall not proceed if FRA claim is pending before SDLC or DLC.'},
+    {id:'m7',n:'Ch.7',t:'Wildlife Protection Procedures in the Field',x:'WILDLIFE OFFENCE PROCEDURE: STEP 1 Any wildlife offence (poaching, snaring, habitat destruction) reported immediately to RFO and Wildlife Warden. STEP 2 Scene preserved, carcass/evidence photographed. STEP 3 Veterinary officer called for post-mortem if animal found dead. STEP 4 FIR filed at nearest police station for Schedule I species offences. STEP 5 Wildlife Crime Control Bureau WCCB informed for Schedule I species. HUMAN-WILDLIFE CONFLICT: (1) Receive complaint. (2) RFO visits site within 24 hours. (3) Assess damage/injury. (4) Assist in filing compensation claim. (5) Forward to DFO for payment within 7 days.'},
+    {id:'m8',n:'Ch.8',t:'Forest Revenue, Permits and Compounding',x:'PERMITS ISSUED BY RFO: Grazing permit for seasonal grazing in Protected Forests; Grass cutting permit; NTFP collection permit for minor forest produce collection by tribals; Firewood permit. PERMITS ISSUED BY DFO: Timber grant for building to BPL families; Special transit pass for sandalwood; Commercial NTFP permit; Research/photography permit in wildlife areas. ALL REVENUE must be remitted to Government account within 24 hours. Revenue registers maintained at Range and Division offices.'}
+  ]}
+};
+
+// Drive files config
+var DRIVE_FILES = [
+  {name:'Karnataka Forest Act 1963',key:'kfa',id:'1kLJscd0wAeJILLnNvPNAVkCjmKEFcPrf',icon:'🌳',status:'pending'},
+  {name:'Wildlife Protection Act 1972',key:'wpa',id:'1vB1aN0--r68gce_SmphGGspuHd0E8grP',icon:'🐘',status:'pending'},
+  {name:'Forest Conservation Act 1980',key:'fca',id:'124EQgS7qZBQmILk79K4dnwyuAksR0nUD',icon:'🏔️',status:'pending'},
+  {name:'Forest Rights Act 2006',key:'fra',id:'1nFU6jyD8arXZL05WURAX8MkeDM8D9yoG',icon:'👥',status:'pending'},
+  {name:'Karnataka Forest Rules',key:'kfr',id:'12tmQIIMUkFNU3G5paQDseDsucOkXxL4G',icon:'📝',status:'pending'},
+  {name:'KFD Working Manual',key:'kfdm',id:'1299gL3sQuZ_EzsuugtE2dfFi_Jwne9LG',icon:'📖',status:'pending'},
+  {name:'KPTA Act',key:'kpta',id:'19jqygV1rwcuXHbg8yGGvTs02Efe_K9Wg',icon:'📜',status:'pending'},
+  {name:'Wildlife Protection Rules',key:'wpr',id:'1-e89pL_JZBwJTZzxf16jzyzPhtqtKDvN',icon:'🐾',status:'pending'},
+  {name:'Forest Appeals & Cases',key:'fac',id:'1AvplUIuIXGqmgMaMVVp3tkGnZUhEqaB0',icon:'⚖️',status:'pending'}
+];
+
+var LOADED_DOCS = {};
+var totalIndexed = 0;
+var libFilter = 'all';
+var chatHistory = [];
+var chatBusy = false;
+var currentSection = null;
+
+// ================================================================
+// HELPERS
+// ================================================================
+function $(id){return document.getElementById(id)}
+function show(el){if(typeof el==='string')el=$(el);if(el)el.classList.add('show')}
+function hide(el){if(typeof el==='string')el=$(el);if(el)el.classList.remove('show')}
+function showBlock(id){$(id).style.display='block'}
+function hideBlock(id){$(id).style.display='none'}
+function getLS(k){return localStorage.getItem(k)||''}
+function setLS(k,v){localStorage.setItem(k,v)}
+
+// ================================================================
+// AUTH
+// ================================================================
+function getUsers(){return JSON.parse(getLS('kfl_users')||'[]')}
+function saveUsers(u){setLS('kfl_users',JSON.stringify(u))}
+function getSession(){var s=getLS('kfl_session');return s?JSON.parse(s):null}
+function saveSession(u){var s=Object.assign({},u);delete s.pw;setLS('kfl_session',JSON.stringify(s))}
+function clearSession(){localStorage.removeItem('kfl_session')}
+
+function doLogin(){
+  var id=$('l-id').value.trim(), pw=$('l-pw').value;
+  if(!id||!pw){$('l-err').textContent='Please enter Employee ID and password';return}
+  var users=getUsers();
+  var user=null;
+  for(var i=0;i<users.length;i++){if(users[i].id===id&&users[i].pw===btoa(pw)){user=users[i];break}}
+  if(!user){$('l-err').textContent='Invalid Employee ID or password';return}
+  $('l-err').textContent='';
+  saveSession(user);
+  enterApp(user);
+}
+
+function doRegister(){
+  var name=$('r-name').value.trim(), id=$('r-id').value.trim(), role=$('r-role').value, pw=$('r-pw').value;
+  if(!name||!id||!role||!pw){$('r-err').textContent='All fields are required';return}
+  if(pw.length<6){$('r-err').textContent='Password must be at least 6 characters';return}
+  var users=getUsers();
+  for(var i=0;i<users.length;i++){if(users[i].id===id){$('r-err').textContent='Employee ID already registered';return}}
+  var user={uid:Date.now()+'',name:name,id:id,role:role,pw:btoa(pw)};
+  users.push(user);saveUsers(users);saveSession(user);
+  $('r-err').textContent='';
+  enterApp(user);
+}
+
+function doLogout(){
+  clearSession();
+  $('app-screen').style.display='none';
+  $('login-screen').style.display='flex';
+  showLoginForm();
+}
+
+function showLoginForm(){
+  $('login-form').classList.remove('d-none');
+  $('reg-form').classList.add('d-none');
+}
+function showRegForm(){
+  $('login-form').classList.add('d-none');
+  $('reg-form').classList.remove('d-none');
+}
+
+function enterApp(user){
+  $('login-screen').style.display='none';
+  $('app-screen').style.display='flex';
+  $('sb-name').textContent=user.name||user.id;
+  $('sb-role').textContent=user.role||'Forest Officer';
+  $('set-name').textContent=user.name||user.id;
+  $('set-role').textContent=user.role||'';
+  var h=new Date().getHours();
+  $('time-greet').textContent=h<12?'Morning':h<17?'Afternoon':'Evening';
+  $('name-greet').textContent=(user.name||user.id).split(' ')[0];
+  var k=getLS('gemini_key');
+  if($('key-input')&&k)$('key-input').value=k;
+  checkApiWarning();
+  loadSavedDriveConfig();
+  showPage('home');
+}
+
+// ================================================================
+// NAVIGATION
+// ================================================================
+var pageTitles={home:'Karnataka Forest Law',library:'Law Library',search:'Smart Search',ai:'AI Assistant',settings:'Settings'};
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.sb-btn[data-page]').forEach(function(b){b.classList.remove('active')});
+  var pg=$('page-'+name);
+  if(pg)pg.classList.add('active');
+  var nb=document.querySelector('.sb-btn[data-page="'+name+'"]');
+  if(nb)nb.classList.add('active');
+  $('page-title').textContent=pageTitles[name]||name;
+  closeSidebar();
+  if(name==='library')renderLibrary();
+  if(name==='search')setTimeout(function(){var si=$('search-input');if(si)si.focus();},100);
+  if(name==='settings'){var k=getLS('gemini_key');if($('key-input')&&k)$('key-input').value=k;}
+}
+
+function openSidebar(){$('sidebar').classList.add('open');$('sb-overlay').classList.add('show')}
+function closeSidebar(){$('sidebar').classList.remove('open');$('sb-overlay').classList.remove('show')}
+
+// ================================================================
+// LIBRARY
+// ================================================================
+function renderLibrary(){
+  var list=$('doc-list');
+  if(!list)return;
+  var docs=libFilter==='all'?DOCS:DOCS.filter(function(d){return d.type===libFilter});
+  var html='';
+  docs.forEach(function(d){
+    html+='<div class="doc-card"><div class="doc-icon">'+d.icon+'</div><div class="doc-info"><div class="doc-title">'+d.title+'</div><div class="doc-desc">'+d.desc+'</div><div class="doc-meta"><span class="doc-tag tag-'+d.type+'">'+d.type.charAt(0).toUpperCase()+d.type.slice(1)+'</span><span class="doc-size">'+d.pages+' · '+d.size+'</span>'+(LOADED_DOCS[d.id]?'<span style="color:#27ae60;font-size:11px;font-weight:700">✅ Loaded</span>':'')+'</div></div><div class="doc-actions"><button class="btn-view" onclick="openSources(\''+d.id+'\')">📄 View</button></div></div>';
+  });
+  list.innerHTML=html||'<p style="padding:20px;color:#888">No documents found.</p>';
+
+  // Update drive status
+  var loadedCount=Object.keys(LOADED_DOCS).length;
+  if(loadedCount>0){
+    $('drive-status-bar').style.display='block';
+    $('drive-status-bar').textContent='✅ '+loadedCount+' documents loaded from your Drive · '+totalIndexed+' sections indexed';
+  }
+}
+
+function openSources(docId){
+  var doc=DOCS.find(function(d){return d.id===docId});
+  if(!doc)return;
+  $('sources-title').textContent=doc.title;
+  var html='<p style="color:#aaa;font-size:13px;margin-bottom:16px;text-align:center">Click any source to open or download the document</p>';
+  doc.urls.forEach(function(u){
+    html+='<a href="'+u.url+'" target="_blank" rel="noopener" class="source-link" style="background:'+u.color+'">';
+    html+='<span class="source-link-icon">🔗</span>';
+    html+='<span class="source-link-info"><span class="source-link-name">'+u.label+'</span><br><span class="source-link-url">'+u.url.replace('https://','')+'</span></span>';
+    html+='<span class="source-link-arrow">→</span></a>';
+  });
+  if(LOADED_DOCS[docId]){
+    html+='<div style="margin-top:16px;padding:12px;background:rgba(39,174,96,.15);border-radius:8px;color:#27ae60;font-size:13px;font-weight:600;text-align:center">✅ This document is loaded from your Google Drive and indexed for search</div>';
+  }
+  html+='<div class="sources-tip">💡 IndiaKanoon always works for online reading. Use Ctrl+S after opening to save PDF locally.</div>';
+  $('sources-body').innerHTML=html;
+  show('sources-modal');
+}
+
+// ================================================================
+// SMART SEARCH
+// ================================================================
+function doSearch(q){
+  var el=$('search-results');
+  if(!el)return;
+  if(!q||q.trim().length<2){
+    el.innerHTML='<div class="search-empty"><div class="search-empty-icon">🔍</div><p style="font-size:15px;font-weight:600">Search Karnataka forest laws</p><p style="font-size:13px;margin-top:6px">Sections, rules, penalties, procedures</p></div>';
+    return;
+  }
+  var ql=q.toLowerCase();
+  var sNumM=q.match(/(?:sec(?:tion)?|s\.?)\s*(\d+[a-z]?)/i)||q.match(/rule\s*(\d+[a-z]?)/i)||q.match(/chapter\s*([ivxlcdm\d]+)/i);
+  var sNum=sNumM?sNumM[1].toLowerCase():null;
+  var actMap={kfa:'kfa','karnataka forest':'kfa',wpa:'wpa',wildlife:'wpa',fca:'fca',conservation:'fca',fra:'fra','forest rights':'fra',tribal:'fra','gram sabha':'fra',ifa:'ifa','indian forest':'ifa',kfr:'kfr','forest rules':'kfr',transit:'kfr',sandalwood:'kfa',chandana:'kfa','red sanders':'wpa',ivory:'wpa',poaching:'wpa',elephant:'wpa',tiger:'wpa',leopard:'wpa',manual:'kfdm',beat:'kfdm',patrol:'kfdm',encroach:'kfdm',offence:'kfa',permit:'kfr',compensation:'kfr',hwc:'kfr'};
+  var dAct=null;
+  var ak=Object.keys(actMap);
+  for(var ai=0;ai<ak.length;ai++){if(ql.indexOf(ak[ai])!==-1){dAct=actMap[ak[ai]];break}}
+  var res=[];
+  Object.keys(LAWS).forEach(function(key){
+    var law=LAWS[key];
+    law.secs.forEach(function(sec){
+      var score=0;
+      var txt=(sec.n+' '+sec.t+' '+sec.x).toLowerCase();
+      var words=ql.split(/\s+/).filter(function(w){return w.length>3});
+      if(sNum){
+        var sn=sec.n.toLowerCase().replace('section ','').replace('rule ','').replace('chapter ','');
+        if(sn===sNum)score+=100;
+        else if(sn.indexOf(sNum)!==-1)score+=50;
+      }
+      if(dAct&&dAct===key)score+=30;
+      words.forEach(function(w){
+        if(txt.indexOf(w)!==-1)score+=5;
+        if(sec.t.toLowerCase().indexOf(w)!==-1)score+=10;
+      });
+      if(/penalt|punish|fine|imprison|offence|violat|arrest/.test(ql)){if(/penalt|punish|fine|imprison|rupee|year|month/.test(txt))score+=20}
+      var specTerms=['sandalwood','chandana','ivory','poaching','transit','compound','seizure','arrest','compensation','beat','patrol','encroach','permit','working','manual','schedule'];
+      specTerms.forEach(function(st){if(ql.indexOf(st)!==-1&&txt.indexOf(st)!==-1)score+=25});
+      if(key==='kfdm'&&/manual|procedure|beat|patrol|register|permit|revenue|encroach|wildlife|timber|sandalwood/.test(ql))score+=20;
+      if(score>5)res.push({score:score,key:key,law:law,sec:sec});
+    });
+  });
+  res.sort(function(a,b){return b.score-a.score});
+  if(!res.length){
+    el.innerHTML='<div class="no-results"><div style="font-size:40px;margin-bottom:12px">🔍</div><p>No results for "<strong>'+q+'</strong>"</p><p style="font-size:13px;margin-top:8px">Try: "section 26", "sandalwood", "penalty", "transit pass"</p></div>';
+    return;
+  }
+  var grp={};
+  res.slice(0,25).forEach(function(r){if(!grp[r.key])grp[r.key]={law:r.law,items:[]};grp[r.key].items.push(r)});
+  var html='<div class="results-count">Found <strong>'+res.length+'</strong> result(s) for "<strong>'+q+'</strong>"</div>';
+  Object.keys(grp).forEach(function(k){
+    var g=grp[k];
+    html+='<div class="result-group"><div class="result-group-title">'+g.law.sn+' — '+g.law.fn+'</div>';
+    g.items.forEach(function(r){
+      var snip=getSnippet(r.sec.x,q);
+      html+='<div class="result-card" onclick="openSection(\''+r.sec.id+'\')">';
+      html+='<div class="result-act">'+r.law.sn+' · Section '+r.sec.n+'</div>';
+      html+='<div class="result-title">'+r.sec.t+'</div>';
+      html+='<div class="result-snippet">'+snip+'</div></div>';
+    });
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function getSnippet(text,q){
+  var words=q.split(/\s+/).filter(function(w){return w.length>3});
+  var best=0,bs=0;
+  for(var i=0;i<text.length-50;i+=20){
+    var chunk=text.slice(i,i+200).toLowerCase();
+    var s=words.reduce(function(a,w){return a+(chunk.indexOf(w.toLowerCase())!==-1?1:0)},0);
+    if(s>bs){bs=s;best=i}
+  }
+  var snip=text.slice(best,best+200);
+  if(best>0)snip='...'+snip;
+  if(best+200<text.length)snip+='...';
+  words.forEach(function(w){snip=snip.replace(new RegExp('('+w+')','gi'),'<mark>$1</mark>')});
+  return snip;
+}
+
+function setSearch(q){$('search-input').value=q;doSearch(q);showPage('search')}
+function catSearch(q){$('search-input').value=q;doSearch(q);showPage('search')}
+
+function openSection(sid){
+  var found=null,law=null;
+  Object.keys(LAWS).forEach(function(k){
+    LAWS[k].secs.forEach(function(s){if(s.id===sid){found=s;law=LAWS[k]}});
+  });
+  if(!found)return;
+  currentSection={sec:found,law:law};
+  $('section-header').style.background=law.color;
+  $('section-sub').textContent=law.sn+' · Section '+found.n;
+  $('section-heading').textContent=found.t;
+  $('section-law-name').textContent=law.fn;
+  $('section-big-title').textContent='Section '+found.n+' — '+found.t;
+  var paras=found.x.split('\n');
+  $('section-text').innerHTML=paras.map(function(p){return'<p>'+p+'</p>'}).join('');
+  $('ask-ai-btn').onclick=function(){
+    closeSectionOverlay();
+    sendSuggestion('Explain Section '+found.n+' of '+law.sn+' in detail with practical examples for a field forest officer. Include penalties and procedures.');
+  };
+  show('section-overlay');
+}
+function closeSectionOverlay(){hide('section-overlay')}
+
+// ================================================================
+// DRIVE LOADER
+// ================================================================
+function openDriveModal(){
+  var saved=getLS('drive_files');
+  if(saved){try{DRIVE_FILES=JSON.parse(saved)}catch(e){}}
+  renderDriveFileList();
+  show('drive-modal');
+}
+function closeDriveModal(){hide('drive-modal')}
+
+function renderDriveFileList(){
+  var html='';
+  DRIVE_FILES.forEach(function(f,i){
+    var badge=f.status==='loaded'?'✅':f.status==='error'?'❌':'⏳';
+    var cls=f.status==='loaded'?'ok':f.status==='error'?'fail':'';
+    var extra='';
+    if(f.status==='loaded')extra='<div style="font-size:11px;color:#27ae60;margin-top:4px">✅ '+(f.sections||0)+' sections indexed</div>';
+    if(f.status==='error')extra='<div style="font-size:11px;color:#e74c3c;margin-top:4px">❌ '+(f.errorMsg||'Failed to load')+'</div>';
+    html+='<div class="drive-file-item '+cls+'" id="dfi-'+i+'">';
+    html+='<div class="drive-file-top"><span class="drive-file-icon">'+f.icon+'</span><span class="drive-file-name">'+f.name+'</span><span class="drive-file-badge">'+badge+'</span></div>';
+    html+='<input class="drive-file-input" id="dfi-input-'+i+'" placeholder="File ID or Drive link" value="'+(f.id||'')+'">';
+    html+=extra;
+    html+='</div>';
+  });
+  $('drive-file-list').innerHTML=html;
+  $('drive-progress').classList.remove('show');
+}
+
+function saveDriveConfig(){
+  for(var i=0;i<DRIVE_FILES.length;i++){
+    var inp=$('dfi-input-'+i);
+    if(inp){
+      var val=inp.value.trim();
+      var m=val.match(/\/d\/([a-zA-Z0-9_-]{20,})/);
+      DRIVE_FILES[i].id=m?m[1]:val;
+    }
+  }
+  setLS('drive_files',JSON.stringify(DRIVE_FILES));
+}
+
+function loadSavedDriveConfig(){
+  var saved=getLS('drive_files');
+  if(saved){try{DRIVE_FILES=JSON.parse(saved)}catch(e){}}
+}
+
+async function loadAllDriveFiles(){
+  saveDriveConfig();
+  var prog=$('drive-progress');
+  var progText=$('drive-progress-text');
+  prog.classList.add('show');
+  $('drive-result').classList.remove('show');
+  totalIndexed=0;
+
+  for(var i=0;i<DRIVE_FILES.length;i++){
+    var f=DRIVE_FILES[i];
+    if(!f.id)continue;
+    progText.textContent='Loading '+f.name+'... ('+(i+1)+'/'+DRIVE_FILES.length+')';
+    try{
+      progText.textContent='Loading '+f.name+'... ('+( i+1)+'/'+DRIVE_FILES.length+') — trying CORS proxies...';
+      var text=await fetchDriveFile(f.id);
+      if(text&&text.length>200&&!text.includes('<!DOCTYPE')&&!text.includes('<html')){
+        LOADED_DOCS[f.id]=text;
+        DRIVE_FILES[i].status='loaded';
+        var secs=parseTxtSections(text,f);
+        indexSections(f.key,f.name,secs);
+        totalIndexed+=secs.length;
+        DRIVE_FILES[i].sections=secs.length;
+      }else{
+        DRIVE_FILES[i].status='error';
+        DRIVE_FILES[i].errorMsg='Got HTML instead of text — check file sharing settings';
+      }
+    }catch(e){
+      DRIVE_FILES[i].status='error';
+      DRIVE_FILES[i].errorMsg=e.message;
+    }
+    renderDriveFileList();
+  }
+
+  prog.classList.remove('show');
+  $('drive-result-num').textContent=totalIndexed;
+  $('drive-result').classList.add('show');
+  setLS('drive_files',JSON.stringify(DRIVE_FILES));
+  renderLibrary();
+}
+
+async function fetchDriveFile(fileId){
+  // Try multiple CORS-friendly strategies
+  var strategies=[
+    // Strategy 1: CORS proxy services
+    async function(){
+      var url='https://corsproxy.io/?'+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+fileId);
+      var r=await fetch(url,{signal:AbortSignal.timeout(15000)});
+      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE')&&!t.includes('<html'))return t;}
+      throw new Error('proxy1 failed');
+    },
+    // Strategy 2: Another CORS proxy
+    async function(){
+      var url='https://api.allorigins.win/raw?url='+encodeURIComponent('https://drive.google.com/uc?export=download&id='+fileId);
+      var r=await fetch(url,{signal:AbortSignal.timeout(15000)});
+      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE')&&!t.includes('<html'))return t;}
+      throw new Error('proxy2 failed');
+    },
+    // Strategy 3: Direct with no-cors workaround
+    async function(){
+      var url='https://drive.google.com/uc?export=download&confirm=t&id='+fileId;
+      var r=await fetch(url,{mode:'cors',credentials:'omit',signal:AbortSignal.timeout(15000)});
+      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE'))return t;}
+      throw new Error('direct failed');
+    }
+  ];
+  for(var i=0;i<strategies.length;i++){
+    try{var result=await strategies[i]();if(result)return result;}
+    catch(e){continue;}
+  }
+  throw new Error('All strategies failed for '+fileId);
+}
+
+function parseTxtSections(text,fileInfo){
+  var secs=[];
+  var lines=text.split('\n');
+  var cur=null,buf=[];
+  var secPat=/^\s*(?:section|sec\.?)\s*(\d+[a-z]?)[\.\-\)\s]+(.{5,})/i;
+  var rulePat=/^\s*rule\s*(\d+[a-z]?)[\.\-\)\s]+(.{5,})/i;
+  var chapPat=/^\s*chapter\s*([ivxlcdm\d]+)[\.\-\)\s]*(.*)/i;
+
+  lines.forEach(function(line){
+    var l=line.trim();if(!l)return;
+    var m=l.match(secPat)||l.match(rulePat)||l.match(chapPat);
+    if(m){
+      if(cur&&buf.length){cur.x=buf.join(' ').replace(/\s+/g,' ').trim();if(cur.x.length>20)secs.push(cur)}
+      var isRule=/rule/i.test(l),isCh=/chapter/i.test(l);
+      var prefix=isRule?'Rule ':isCh?'Ch.':'Section ';
+      cur={id:fileInfo.key+'_'+prefix.trim().toLowerCase()+m[1],n:prefix+m[1],t:(m[2]||'').trim().substring(0,100),x:''};
+      buf=[];
+    }else if(cur){
+      buf.push(l);
+      if(buf.join(' ').length>2000){cur.x=buf.join(' ').replace(/\s+/g,' ').trim();secs.push(cur);cur=null;buf=[]}
+    }
+  });
+  if(cur&&buf.length){cur.x=buf.join(' ').replace(/\s+/g,' ').trim();if(cur.x.length>20)secs.push(cur)}
+  if(secs.length<3){
+    var chunks=text.match(/[\s\S]{1,1500}/g)||[];
+    secs=chunks.map(function(c,i){return{id:fileInfo.key+'_p'+i,n:'Part '+(i+1),t:fileInfo.name+' Part '+(i+1),x:c.replace(/\s+/g,' ').trim()}});
+  }
+  return secs;
+}
+
+function indexSections(key,docName,secs){
+  var colors={kfa:'#2d6a2d',wpa:'#1a5c8a',fca:'#6b3fa0',fra:'#8a4a00',ifa:'#8a1a1a',kfr:'#1a6b5a',kfdm:'#4a6741',kpta:'#2d4a6a',wpr:'#1a5c8a',fac:'#8a3a1a'};
+  if(!LAWS[key])LAWS[key]={sn:key.toUpperCase(),fn:docName,color:colors[key]||'#2d6a2d',secs:[]};
+  var existing={};
+  LAWS[key].secs.forEach(function(s){existing[s.id]=true});
+  secs.forEach(function(s){if(!existing[s.id])LAWS[key].secs.push(s)});
+}
+
+// ================================================================
+// AI CHAT
+// ================================================================
+var SYSP='You are an expert legal assistant for Karnataka Forest Department officials.\n\nExpertise: Karnataka Forest Act 1963, Wildlife Protection Act 1972, Forest Conservation Act 1980, Forest Rights Act 2006, Indian Forest Act 1927, Karnataka Forest Rules, KFD Working Manual, SC/HC judgments. Expert on sandalwood laws, red sanders, ivory, encroachment procedures, beat duties, forest offence reports.\n\nRules:\n- Cite EXACT section numbers (e.g. "Section 26(1)(a) of KFA 1963")\n- For penalties: state BOTH imprisonment term AND fine amount\n- For procedures: numbered steps with responsible authority\n- Cite SC/HC judgments by full case name and year\n- If asked in Kannada: respond fully in Kannada with proper legal terminology\n- Use **bold** for key provisions\n- End complex answers with "**Key Takeaway:**"\n- Be practical for field officers';
+
+function checkApiWarning(){
+  var k=getLS('gemini_key');
+  if($('api-warning'))$('api-warning').classList.toggle('d-none',!!k);
+}
+
+function saveGeminiKey(){
+  var k=$('key-input').value.trim();
+  if(!k){alert('Please enter an API key');return}
+  setLS('gemini_key',k);
+  var m=$('key-saved-msg');
+  m.classList.remove('d-none');
+  setTimeout(function(){m.classList.add('d-none')},3000);
+  checkApiWarning();
+}
+
+async function sendChat(){
+  if(chatBusy)return;
+  var inp=$('chat-input');
+  var txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='auto';
+  addMsg('user',txt);
+  chatBusy=true;$('send-btn').disabled=true;
+  var typEl=addTyping();
+  try{
+    var reply=await callGemini(txt);
+    typEl.remove();addMsg('ai',reply);
+  }catch(e){
+    typEl.remove();
+    if(e.message==='NO_KEY')addMsg('ai','⚠️ Please add your **Gemini API key** in Settings. It\'s free from aistudio.google.com/apikey');
+    else if(e.message.indexOf('429')!==-1)addMsg('ai','⚠️ Rate limit reached. Please wait 1-2 minutes and try again.');
+    else addMsg('ai','⚠️ Error: '+e.message+'. Please check your API key in Settings.');
+  }
+  chatBusy=false;$('send-btn').disabled=false;
+}
+
+async function callGemini(msg){
+  var key=getLS('gemini_key');
+  if(!key)throw new Error('NO_KEY');
+  chatHistory.push({role:'user',parts:[{text:msg}]});
+  var models=['gemini-2.0-flash','gemini-1.5-flash','gemini-1.5-flash-latest','gemini-1.5-pro'];
+  var lastErr='';
+  for(var i=0;i<models.length;i++){
+    try{
+      var r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+models[i]+':generateContent?key='+key,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({system_instruction:{parts:[{text:SYSP}]},contents:chatHistory,generationConfig:{temperature:0.3,maxOutputTokens:2048}})
+      });
+      var d=await r.json();
+      if(!r.ok){lastErr=r.status+': '+(d.error&&d.error.message||'');if(r.status===429)await new Promise(function(x){setTimeout(x,2000)});continue}
+      var txt=d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts&&d.candidates[0].content.parts[0]&&d.candidates[0].content.parts[0].text;
+      if(!txt){lastErr='Empty response';continue}
+      chatHistory.push({role:'model',parts:[{text:txt}]});
+      return txt;
+    }catch(e){lastErr=e.message;continue}
+  }
+  chatHistory.pop();throw new Error(lastErr||'All models failed');
+}
+
+function addMsg(role,text){
+  var el=$('chat-messages');
+  var w=el.querySelector('.chat-welcome');if(w)w.remove();
+  var d=document.createElement('div');
+  d.className='msg '+role;
+  if(role==='ai')d.innerHTML='<div class="msg-avatar">🤖</div><div class="msg-bubble">'+fmtMd(text)+'</div>';
+  else d.innerHTML='<div class="msg-bubble">'+escHtml(text)+'</div>';
+  el.appendChild(d);el.scrollTop=el.scrollHeight;return d;
+}
+
+function addTyping(){
+  var el=$('chat-messages');
+  var w=el.querySelector('.chat-welcome');if(w)w.remove();
+  var d=document.createElement('div');
+  d.className='msg ai';
+  d.innerHTML='<div class="msg-avatar">🤖</div><div class="msg-bubble"><span class="typing"><span></span><span></span><span></span></span></div>';
+  el.appendChild(d);el.scrollTop=el.scrollHeight;return d;
+}
+
+function sendSuggestion(text){
+  showPage('ai');
+  setTimeout(function(){$('chat-input').value=text;sendChat()},150);
+}
+
+function fmtMd(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code>$1</code>').replace(/^### (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>')
+    .replace(/^[\-\*] (.+)$/gm,'<li>$1</li>').replace(/^(\d+)\. (.+)$/gm,'<li>$2</li>')
+    .replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>');
+}
+function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function indexPastedText(){
+  var key=document.getElementById('paste-doc-select').value;
+  var text=document.getElementById('paste-doc-text').value.trim();
+  var resultEl=document.getElementById('paste-result');
+  if(!key){alert('Please select which document you are pasting');return}
+  if(!text||text.length<100){alert('Please paste the document text first');return}
+  var nameMap={kfa:'Karnataka Forest Act 1963',wpa:'Wildlife Protection Act 1972',fca:'Forest Conservation Act 1980',fra:'Forest Rights Act 2006',kfr:'Karnataka Forest Rules',kfdm:'KFD Working Manual',kpta:'KPTA Act',wpr:'Wildlife Protection Rules',fac:'Forest Appeals and Cases'};
+  var f={key:key,name:nameMap[key]||key,icon:'📄'};
+  var secs=parseTxtSections(text,f);
+  indexSections(key,f.name,secs);
+  totalIndexed+=secs.length;
+  // Mark as loaded in DRIVE_FILES
+  for(var i=0;i<DRIVE_FILES.length;i++){if(DRIVE_FILES[i].key===key){DRIVE_FILES[i].status='loaded';DRIVE_FILES[i].sections=secs.length;break}}
+  LOADED_DOCS[key]=text;
+  resultEl.style.display='block';
+  resultEl.textContent='✅ Indexed '+secs.length+' sections from '+f.name+'! Search will now use this text.';
+  document.getElementById('paste-doc-text').value='';
+  renderDriveFileList();
+  renderLibrary();
+}
+
+// ================================================================
+// INIT — all event listeners in one place
+// ================================================================
+window.addEventListener('DOMContentLoaded',function(){
+  // Auth
+  $('l-btn').onclick=doLogin;
+  $('r-btn').onclick=doRegister;
+  $('l-reg').onclick=showRegForm;
+  $('r-back').onclick=showLoginForm;
+  $('logout-btn').onclick=doLogout;
+  $('set-logout-btn').onclick=doLogout;
+
+  // Enter key for login
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter')return;
+    if($('app-screen').style.display==='flex')return;
+    if(!$('reg-form').classList.contains('d-none'))doRegister();
+    else doLogin();
+  });
+
+  // Sidebar
+  $('menu-btn').onclick=function(){openSidebar()};
+  $('sb-overlay').onclick=closeSidebar;
+
+  // Nav buttons
+  document.querySelectorAll('.sb-btn[data-page]').forEach(function(btn){
+    btn.onclick=function(){showPage(btn.getAttribute('data-page'))};
+  });
+  $('sb-drive-btn').onclick=openDriveModal;
+
+  // Topbar buttons
+  $('drive-btn').onclick=openDriveModal;
+  $('search-btn').onclick=function(){showPage('search')};
+  $('ai-btn').onclick=function(){showPage('ai')};
+
+  // Library filters
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.onclick=function(){
+      libFilter=btn.getAttribute('data-filter');
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});
+      btn.classList.add('active');
+      renderLibrary();
+    };
+  });
+  $('lib-drive-btn').onclick=openDriveModal;
+
+  // Search
+  $('search-input').addEventListener('input',function(){doSearch(this.value)});
+  $('search-clear').onclick=function(){$('search-input').value='';doSearch('')};
+  document.querySelectorAll('.hint-pill').forEach(function(p){
+    p.onclick=function(){setSearch(p.getAttribute('data-hint'))};
+  });
+
+  // Home
+  $('home-search-btn').onclick=function(){catSearch($('home-search').value)};
+  $('home-search').onkeydown=function(e){if(e.key==='Enter')catSearch(this.value)};
+  document.querySelectorAll('.cat-card').forEach(function(c){
+    c.onclick=function(){catSearch(c.getAttribute('data-search'))};
+  });
+  document.querySelectorAll('.j-card').forEach(function(c){
+    c.onclick=function(){catSearch(c.getAttribute('data-search'))};
+  });
+
+  // AI chat
+  $('send-btn').onclick=sendChat;
+  $('chat-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+  $('chat-input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'});
+  document.querySelectorAll('.chat-sug-btn').forEach(function(b){
+    b.onclick=function(){sendSuggestion(b.getAttribute('data-sug'))};
+  });
+
+  // Settings
+  $('save-key-btn').onclick=saveGeminiKey;
+  $('go-settings').onclick=function(e){e.preventDefault();showPage('settings')};
+
+  // Section overlay
+  $('section-back').onclick=closeSectionOverlay;
+
+  // Sources modal
+  $('sources-close-btn').onclick=function(){hide('sources-modal')};
+
+  // Drive modal
+  $('drive-close-btn').onclick=closeDriveModal;
+  $('drive-load-all').onclick=loadAllDriveFiles;
+  $('drive-save').onclick=function(){saveDriveConfig();alert('✅ File IDs saved!')};
+
+  // Close modals on overlay click
+  $('drive-modal').onclick=function(e){if(e.target===$('drive-modal'))closeDriveModal()};
+  $('sources-modal').onclick=function(e){if(e.target===$('sources-modal'))hide('sources-modal')};
+
+  // Check session
+  var session=getSession();
+  if(session)enterApp(session);
+});
+</script>
+</body>
+</html>
