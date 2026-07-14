@@ -476,8 +476,12 @@ input,select,textarea{font-family:inherit}
       <div class="drive-info-box">
         📌 <strong>Your 9 files are pre-filled below.</strong><br>
         Click <strong>"📥 Load All Documents"</strong> to fetch from Google Drive.<br><br>
-        <strong>⚠️ If files show ❌:</strong> This happens when running from a local file.<br>
-        <strong>Solution:</strong> Paste the TXT content directly using the box below ↓
+        <strong>⚠️ Before loading — check your Drive sharing:</strong><br>
+        1. Open Google Drive → right-click each TXT file<br>
+        2. Click <strong>"Share"</strong> → <strong>"Change to anyone with the link"</strong><br>
+        3. Make sure it says <strong>"Anyone with the link can view"</strong><br>
+        4. Then click Load All Documents below<br><br>
+        <strong>If still ❌:</strong> Use the paste option below ↓
       </div>
       <div style="background:#fff3e0;border-radius:8px;padding:14px;margin-bottom:16px;border:2px solid #ffb74d">
         <div style="font-size:13px;font-weight:700;color:#e65100;margin-bottom:8px">📋 Alternative: Paste TXT content directly</div>
@@ -965,35 +969,36 @@ async function loadAllDriveFiles(){
 }
 
 async function fetchDriveFile(fileId){
-  // Try multiple CORS-friendly strategies
-  var strategies=[
-    // Strategy 1: CORS proxy services
-    async function(){
-      var url='https://corsproxy.io/?'+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+fileId);
-      var r=await fetch(url,{signal:AbortSignal.timeout(15000)});
-      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE')&&!t.includes('<html'))return t;}
-      throw new Error('proxy1 failed');
-    },
-    // Strategy 2: Another CORS proxy
-    async function(){
-      var url='https://api.allorigins.win/raw?url='+encodeURIComponent('https://drive.google.com/uc?export=download&id='+fileId);
-      var r=await fetch(url,{signal:AbortSignal.timeout(15000)});
-      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE')&&!t.includes('<html'))return t;}
-      throw new Error('proxy2 failed');
-    },
-    // Strategy 3: Direct with no-cors workaround
-    async function(){
-      var url='https://drive.google.com/uc?export=download&confirm=t&id='+fileId;
-      var r=await fetch(url,{mode:'cors',credentials:'omit',signal:AbortSignal.timeout(15000)});
-      if(r.ok){var t=await r.text();if(t&&t.length>200&&!t.includes('<!DOCTYPE'))return t;}
-      throw new Error('direct failed');
-    }
+  // Clean the fileId - remove any URL parts if full URL was pasted
+  var id=fileId.trim();
+  var m=id.match(/[-\w]{25,}/);
+  if(m)id=m[0];
+
+  var proxyUrls=[
+    'https://corsproxy.io/?'+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+id),
+    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+id),
+    'https://corsproxy.io/?'+encodeURIComponent('https://docs.google.com/uc?export=download&id='+id),
+    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://docs.google.com/uc?export=download&id='+id),
+    'https://drive.google.com/uc?export=download&confirm=t&id='+id,
+    'https://docs.google.com/uc?export=download&confirm=t&id='+id
   ];
-  for(var i=0;i<strategies.length;i++){
-    try{var result=await strategies[i]();if(result)return result;}
-    catch(e){continue;}
+
+  for(var i=0;i<proxyUrls.length;i++){
+    try{
+      var controller=new AbortController();
+      var timer=setTimeout(function(){controller.abort()},20000);
+      var r=await fetch(proxyUrls[i],{signal:controller.signal});
+      clearTimeout(timer);
+      if(r.ok){
+        var t=await r.text();
+        // Make sure we got actual text content not HTML error page
+        if(t&&t.length>200&&!t.toLowerCase().startsWith('<!doctype')&&!t.toLowerCase().startsWith('<html')&&!t.includes('ServiceLogin')){
+          return t;
+        }
+      }
+    }catch(e){continue;}
   }
-  throw new Error('All strategies failed for '+fileId);
+  throw new Error('All strategies failed for '+id+'. Check sharing settings.');
 }
 
 function parseTxtSections(text,fileInfo){
