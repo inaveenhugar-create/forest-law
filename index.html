@@ -473,15 +473,27 @@ input,select,textarea{font-family:inherit}
       <button class="drive-modal-close" id="drive-close-btn">✕</button>
     </div>
     <div class="drive-modal-body">
-      <div class="drive-info-box">
-        📌 <strong>Your 9 files are pre-filled below.</strong><br>
-        Click <strong>"📥 Load All Documents"</strong> to fetch from Google Drive.<br><br>
-        <strong>⚠️ Before loading — check your Drive sharing:</strong><br>
-        1. Open Google Drive → right-click each TXT file<br>
-        2. Click <strong>"Share"</strong> → <strong>"Change to anyone with the link"</strong><br>
-        3. Make sure it says <strong>"Anyone with the link can view"</strong><br>
-        4. Then click Load All Documents below<br><br>
-        <strong>If still ❌:</strong> Use the paste option below ↓
+      <div style="background:#e8f4e8;border-radius:8px;padding:14px;margin-bottom:14px;font-size:13px;color:#1a3d1a;line-height:1.7">
+        <strong>📋 Two ways to load your documents:</strong><br>
+        <strong>Option A (Recommended):</strong> Upload TXT files to GitHub → auto loads<br>
+        <strong>Option B:</strong> Paste text directly in the orange box below
+      </div>
+
+      <div style="background:#e8f0ff;border-radius:8px;padding:14px;margin-bottom:14px;border:2px solid #6b3fa0">
+        <div style="font-size:13px;font-weight:700;color:#6b3fa0;margin-bottom:10px">🚀 Option A — Upload to GitHub (One-time setup, loads forever)</div>
+        <div style="font-size:12px;color:#333;line-height:1.8">
+          <strong>Step 1:</strong> Go to <a href="https://github.com/inaveenhugar-create/forest-law" target="_blank" style="color:#6b3fa0">github.com/inaveenhugar-create/forest-law</a><br>
+          <strong>Step 2:</strong> Click <strong>"Add file"</strong> → <strong>"Create new file"</strong><br>
+          <strong>Step 3:</strong> Type filename as: <code style="background:#f0e8ff;padding:1px 5px;border-radius:3px">docs/kfa.txt</code><br>
+          <strong>Step 4:</strong> Open your KFA TXT from Drive → copy all → paste in GitHub editor<br>
+          <strong>Step 5:</strong> Click <strong>"Commit changes"</strong><br>
+          <strong>Step 6:</strong> Repeat for each file using these names:<br>
+          <div style="background:#f0e8ff;padding:8px;border-radius:6px;font-size:11px;margin-top:6px;line-height:1.9">
+            ✅ Files already uploaded! Click <strong>"🔄 Load from GitHub"</strong> below or the button above.
+          </div>
+        </div>
+        <button onclick="loadFromGitHub()" style="width:100%;padding:10px;background:#6b3fa0;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;margin-top:10px">🔄 Load from GitHub Now</button>
+        <div id="github-load-result" style="font-size:12px;margin-top:6px;display:none"></div>
       </div>
       <div style="background:#fff3e0;border-radius:8px;padding:14px;margin-bottom:16px;border:2px solid #ffb74d">
         <div style="font-size:13px;font-weight:700;color:#e65100;margin-bottom:8px">📋 Alternative: Paste TXT content directly</div>
@@ -508,7 +520,7 @@ input,select,textarea{font-family:inherit}
         <div style="color:#27ae60;font-weight:700;margin-top:8px;font-size:14px">✅ Search now uses your actual document text!</div>
       </div>
       <div id="drive-file-list"></div>
-      <button class="drive-load-all-btn" id="drive-load-all">📥 Load All Documents</button>
+      <button class="drive-load-all-btn" id="drive-load-all" style="background:#6b3fa0">🔄 Load from GitHub</button>
       <button class="drive-save-btn" id="drive-save">💾 Save File IDs</button>
     </div>
   </div>
@@ -621,15 +633,15 @@ var LAWS = {
 
 // Drive files config
 var DRIVE_FILES = [
-  {name:'Karnataka Forest Act 1963',key:'kfa',id:'1kLJscd0wAeJILLnNvPNAVkCjmKEFcPrf',icon:'🌳',status:'pending'},
-  {name:'Wildlife Protection Act 1972',key:'wpa',id:'1vB1aN0--r68gce_SmphGGspuHd0E8grP',icon:'🐘',status:'pending'},
-  {name:'Forest Conservation Act 1980',key:'fca',id:'124EQgS7qZBQmILk79K4dnwyuAksR0nUD',icon:'🏔️',status:'pending'},
-  {name:'Forest Rights Act 2006',key:'fra',id:'1nFU6jyD8arXZL05WURAX8MkeDM8D9yoG',icon:'👥',status:'pending'},
-  {name:'Karnataka Forest Rules',key:'kfr',id:'12tmQIIMUkFNU3G5paQDseDsucOkXxL4G',icon:'📝',status:'pending'},
-  {name:'KFD Working Manual',key:'kfdm',id:'1299gL3sQuZ_EzsuugtE2dfFi_Jwne9LG',icon:'📖',status:'pending'},
-  {name:'KPTA Act',key:'kpta',id:'19jqygV1rwcuXHbg8yGGvTs02Efe_K9Wg',icon:'📜',status:'pending'},
-  {name:'Wildlife Protection Rules',key:'wpr',id:'1-e89pL_JZBwJTZzxf16jzyzPhtqtKDvN',icon:'🐾',status:'pending'},
-  {name:'Forest Appeals & Cases',key:'fac',id:'1AvplUIuIXGqmgMaMVVp3tkGnZUhEqaB0',icon:'⚖️',status:'pending'}
+  {name:'Karnataka Forest Act 1963',      key:'kfa',  ghFile:'kfa.txt',                                        icon:'🌳',status:'pending'},
+  {name:'Wildlife Protection Act 1972',   key:'wpa',  ghFile:'Wildlife_Protection_Act_1972.txt',               icon:'🐘',status:'pending'},
+  {name:'Forest Conservation Act 1980',   key:'fca',  ghFile:'Forest Consarvation_Act_1980.txt',               icon:'🏔️',status:'pending'},
+  {name:'Forest Rights Act 2006',         key:'fra',  ghFile:'Forest right act.txt',                           icon:'👥',status:'pending'},
+  {name:'Karnataka Forest Rules 1969',    key:'kfr',  ghFile:'KF_Rules_1969.txt',                              icon:'📝',status:'pending'},
+  {name:'KFD Working Manual 1976',        key:'kfdm', ghFile:'KFD_Manual_1976.txt',                            icon:'📖',status:'pending'},
+  {name:'Karnataka Preservation of Trees',key:'kpta', ghFile:'THE KARNATAKA PRESERVATION OF TREES ACT.txt',   icon:'🌲',status:'pending'},
+  {name:'Wildlife Protection KA Rules',   key:'wpr',  ghFile:'Wildlife_Protection_(Karnataka)_Rules_1973.txt', icon:'🐾',status:'pending'},
+  {name:'Forest Account Code',            key:'fac',  ghFile:'FOREST ACCOUNT CODE.txt',                        icon:'⚖️',status:'pending'}
 ];
 
 var LOADED_DOCS = {};
@@ -968,37 +980,35 @@ async function loadAllDriveFiles(){
   renderLibrary();
 }
 
+async function fetchFromUrl(url){
+  try{
+    var r=await fetch(url);
+    if(r.ok){
+      var t=await r.text();
+      if(t&&t.length>100&&!t.toLowerCase().startsWith('<!doctype')&&!t.toLowerCase().startsWith('<html'))return t;
+    }
+  }catch(e){}
+  return null;
+}
+
 async function fetchDriveFile(fileId){
-  // Clean the fileId - remove any URL parts if full URL was pasted
+  // This is kept for compatibility but GitHub loading is preferred
   var id=fileId.trim();
-  var m=id.match(/[-\w]{25,}/);
-  if(m)id=m[0];
-
-  var proxyUrls=[
-    'https://corsproxy.io/?'+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+id),
-    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://drive.google.com/uc?export=download&confirm=t&id='+id),
-    'https://corsproxy.io/?'+encodeURIComponent('https://docs.google.com/uc?export=download&id='+id),
-    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://docs.google.com/uc?export=download&id='+id),
-    'https://drive.google.com/uc?export=download&confirm=t&id='+id,
-    'https://docs.google.com/uc?export=download&confirm=t&id='+id
-  ];
-
-  for(var i=0;i<proxyUrls.length;i++){
-    try{
-      var controller=new AbortController();
-      var timer=setTimeout(function(){controller.abort()},20000);
-      var r=await fetch(proxyUrls[i],{signal:controller.signal});
-      clearTimeout(timer);
-      if(r.ok){
-        var t=await r.text();
-        // Make sure we got actual text content not HTML error page
-        if(t&&t.length>200&&!t.toLowerCase().startsWith('<!doctype')&&!t.toLowerCase().startsWith('<html')&&!t.includes('ServiceLogin')){
-          return t;
-        }
-      }
-    }catch(e){continue;}
+  var m=id.match(/\/d\/([a-zA-Z0-9_-]{20,})/);
+  if(m)id=m[1];
+  // Try raw GitHub first if configured
+  var ghUser=localStorage.getItem('github_user')||'inaveenhugar-create';
+  var ghRepo=localStorage.getItem('github_repo')||'forest-law';
+  var fileKey=null;
+  for(var i=0;i<DRIVE_FILES.length;i++){if(DRIVE_FILES[i].id===fileId||DRIVE_FILES[i].id===id){fileKey=DRIVE_FILES[i].key;break}}
+  if(fileKey){
+    var ghFile=null;
+    for(var j=0;j<DRIVE_FILES.length;j++){if(DRIVE_FILES[j].key===fileKey){ghFile=DRIVE_FILES[j].ghFile||fileKey+'.txt';break}}
+    var ghUrl='https://raw.githubusercontent.com/'+ghUser+'/'+ghRepo+'/main/docs/'+encodeURIComponent(ghFile||fileKey+'.txt');
+    var t=await fetchFromUrl(ghUrl);
+    if(t)return t;
   }
-  throw new Error('All strategies failed for '+id+'. Check sharing settings.');
+  throw new Error('File not found. Please upload TXT files to GitHub (see instructions).');
 }
 
 function parseTxtSections(text,fileInfo){
@@ -1136,6 +1146,69 @@ function fmtMd(t){
 }
 function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
+async function loadFromGitHub(){
+  var ghUser='inaveenhugar-create';
+  var ghRepo='forest-law';
+  var resultEl=document.getElementById('github-load-result');
+  resultEl.style.display='block';
+  resultEl.style.color='#1a3d1a';
+  resultEl.textContent='🔄 Loading from GitHub...';
+
+  var loaded=0,failed=0;
+  var prog=document.getElementById('drive-progress');
+  var progText=document.getElementById('drive-progress-text');
+  prog.classList.add('show');
+
+  for(var i=0;i<DRIVE_FILES.length;i++){
+    var f=DRIVE_FILES[i];
+    progText.textContent='Loading '+f.name+'...';
+    var filename=f.ghFile||f.key+'.txt';
+    var url='https://raw.githubusercontent.com/'+ghUser+'/'+ghRepo+'/main/docs/'+encodeURIComponent(filename);
+    try{
+      var r=await fetch(url);
+      if(r.ok){
+        var t=await r.text();
+        if(t&&t.length>100&&!t.includes('<!DOCTYPE')){
+          LOADED_DOCS[f.key]=t;
+          DRIVE_FILES[i].status='loaded';
+          var secs=parseTxtSections(t,f);
+          indexSections(f.key,f.name,secs);
+          totalIndexed+=secs.length;
+          DRIVE_FILES[i].sections=secs.length;
+          loaded++;
+        }else{
+          DRIVE_FILES[i].status='error';
+          DRIVE_FILES[i].errorMsg='Not found: docs/'+filename+' — check filename in GitHub';
+          failed++;
+        }
+      }else{
+        DRIVE_FILES[i].status='error';
+        DRIVE_FILES[i].errorMsg='Not found: docs/'+filename+' — check filename in GitHub';
+        failed++;
+      }
+    }catch(e){
+      DRIVE_FILES[i].status='error';
+      DRIVE_FILES[i].errorMsg='Network error';
+      failed++;
+    }
+    renderDriveFileList();
+  }
+
+  prog.classList.remove('show');
+  document.getElementById('drive-result-num').textContent=totalIndexed;
+  document.getElementById('drive-result').classList.add('show');
+
+  if(loaded>0){
+    resultEl.style.color='#27ae60';
+    resultEl.textContent='✅ Loaded '+loaded+' files, '+totalIndexed+' sections indexed!';
+  }else{
+    resultEl.style.color='#e74c3c';
+    resultEl.textContent='❌ No files found. Please upload TXT files to GitHub docs/ folder first (see steps above).';
+  }
+  setLS('drive_files',JSON.stringify(DRIVE_FILES));
+  renderLibrary();
+}
+
 function indexPastedText(){
   var key=document.getElementById('paste-doc-select').value;
   var text=document.getElementById('paste-doc-text').value.trim();
@@ -1240,7 +1313,7 @@ window.addEventListener('DOMContentLoaded',function(){
 
   // Drive modal
   $('drive-close-btn').onclick=closeDriveModal;
-  $('drive-load-all').onclick=loadAllDriveFiles;
+  $('drive-load-all').onclick=loadFromGitHub;
   $('drive-save').onclick=function(){saveDriveConfig();alert('✅ File IDs saved!')};
 
   // Close modals on overlay click
